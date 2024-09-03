@@ -1,3 +1,3 @@
 window.domain = { 
-    url: 'https://beta.aceterus.com/api' 
+    url: 'http://127.0.0.1:8000/api/' 
 }
