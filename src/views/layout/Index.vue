@@ -72,6 +72,12 @@ import Main from './Main.vue';
 }
 </style>
 
+<style lang="scss">
+.el-header {
+    display: initial;
+}
+</style>
+
 <style lang="scss" scoped>
 .home-container {
     height: 100vh;
@@ -86,5 +92,17 @@ import Main from './Main.vue';
     padding: 0;
     display: flex;
     justify-content: center;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    :deep(.grid-content) {
+        width: 100%;
+        .el-col {
+            text-align: center;
+        }
+    }
 }
 </style>

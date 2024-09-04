@@ -12,7 +12,6 @@
                 <el-menu-item v-if="userStore.type === 1" index="/myExer">练习</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exam">考试</el-menu-item>
                 <el-menu-item v-if="userStore.type === 3" index="/myMark">阅卷</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExam">考试</el-menu-item>
                 <el-sub-menu v-if="userStore.type === 0" index="/user">
                     <template #title>用户</template>
                     <el-menu-item index="/org">机构管理</el-menu-item>
