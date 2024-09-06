@@ -90,6 +90,13 @@
                 </div>
             </el-card>
         </div>
+        <div class="button-container">
+            <button>Button 1</button>
+            <button>Button 2</button>
+            <button>Button 3</button>
+            <button>Button 4</button>
+            <button>Button 5</button>
+        </div>
         <el-form :inline="true" :model="queryForm" size="large" class="query">
             <el-form-item label="">
                 <el-input v-model="queryForm.examName" placeholder="请输入考试名称" />
@@ -686,4 +693,27 @@ async function toExer(myExer: any) {
 .el-message-box-ex {
     max-width: 600px;
 }
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #564fcb;
+    transition: background-color 0.2s;
+}
+  
+button:active {
+    background-color: #263bb3;
+}
+  
 </style>
