@@ -179,7 +179,7 @@ onMounted(async () => {
     exer.endTime = dayjs(data3.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
     exer.rmkState = data3.rmkState
 
-    let { data: { data } } = await http.post("myExer/questionList", { exerId: exer.id })
+let { data: { data } } = await http.post("myExer/questionList", { exerId: [1,3] })
     data.userAnswers = []
     data.userScore = null
     exer.questionIds.push(...data)

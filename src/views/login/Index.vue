@@ -11,7 +11,7 @@
                 <el-input v-model.trim="form.pwd" type="password" show-password placeholder="请输入密码" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
+                <el-button type="primary" @click="login">{{ $t("login") }}</el-button>
             </el-form-item>
         </el-form>
     </div>
