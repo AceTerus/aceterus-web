@@ -485,6 +485,14 @@ const router = createRouter({
             path: '/login',
             component: () => import('../views/login/Index.vue'),
         },
+        {
+            path: '/register',
+            component: () => import('../views/login/Register.vue'),
+        },
+        {
+            path: '/validation',
+            component: () => import('../views/login/ValidationMessage.vue'),
+        },
     ]
 })
 

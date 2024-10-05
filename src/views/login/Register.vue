@@ -1,17 +1,23 @@
 <template>
-    <div class="login">
-        <el-form ref="formRef" :model="form" :rules="formRules" class="login-form" size="large">
-            <div class="login-form-title">
+    <div class="register">
+        <el-form ref="formRef" :model="form" :rules="formRules" class="register-form" size="large">
+            <div class="register-form-title">
                 欢迎登录
             </div>
-            <el-form-item label="" prop="loginName">
-                <el-input v-model.trim="form.loginName" placeholder="请输入账号" />
+            <el-form-item label="" prop="username">
+                <el-input v-model.trim="form.username" placeholder="username" />
+            </el-form-item>
+            <el-form-item label="" prop="email">
+                <el-input v-model.trim="form.email" placeholder="email" />
             </el-form-item>
             <el-form-item label="" prop="pwd">
-                <el-input v-model.trim="form.pwd" type="password" show-password placeholder="请输入密码" />
+                <el-input v-model.trim="form.pwd" type="password" show-password placeholder="password" />
+            </el-form-item>
+             <el-form-item label="" prop="cpwd">
+                <el-input v-model.trim="form.cpwd" type="cpassword" show-password placeholder="confirm password" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="login">{{ $t("login") }}</el-button>
+                <el-button type="primary" @click="register">{{ $t("login") }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -27,22 +33,51 @@ import { useDictStore } from '@/stores/dict';
 
 // 定义变量
 const router = useRouter()
-const form = reactive({// 表单
-    loginName: '',
-    pwd: '',
-})
 const formRef = ref<FormInstance>()// 表单引用
+
+const form = ref({
+  username: '',
+  email: '',
+  pwd: '',
+  cpwd: ''
+});
+
+function logData() {
+  const data = {
+    username: form.value.username,
+    email: form.value.email,
+    password: form.value.pwd
+  };
+  console.log(JSON.stringify(data));
+}
+
 const formRules = reactive<FormRules>({// 表单规则
-    loginName: [
+    username: [
+        { required: true, message: '请输入账号', trigger: 'blur' },
+    ],
+    email: [
         { required: true, message: '请输入账号', trigger: 'blur' },
     ],
     pwd: [
         { required: true, message: '请输入密码', trigger: 'blur' },
     ],
+    cpwd: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { validator: validatePwd, trigger: 'blur' },
+    ],
 })
+
+function validatePwd(rule, value, callback) {
+    if (value !== form.value.pwd) {
+        callback(new Error('pws dont match'));
+    } else {
+        callback();
+    }
+}
+
 const keyDown = (e:KeyboardEvent) => {
   if (e.keyCode == 13) {
-    login()
+    register()
   }
 }
 
@@ -56,8 +91,7 @@ onUnmounted(() => {
   window.removeEventListener('keydown', keyDown, false)
 })
 
-// 登录
-async function login() {
+async function register() {
     // 校验数据有效性
     if (!formRef.value) return
     await formRef.value.validate(async (valid, fields) => {
@@ -66,8 +100,9 @@ async function login() {
         }
 
         // 登录
-        let { data: { code, data } } = await http.post('login/in', {
-            loginName: form.loginName,
+        let { data: { code, data } } = await http.post('register', {
+            username: form.username,
+            email: form.email,
             pwd: form.pwd
         })
         if (code !== 200) {
@@ -89,20 +124,20 @@ async function login() {
         dictStore.dicts = dictData.list
 
         // 跳转到首页
-        router.push("/home")
+        router.push("/validation")
     })
 }
 
 </script>
 
 <style lang="scss" scoped>
-.login {
+.register {
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
 
-    .login-form {
+    .register-form {
         position: relative;
         width: 35%;
         height: auto;
@@ -113,7 +148,7 @@ async function login() {
         box-shadow: 0 0 16px 3px rgb(0 0 0 / 5%);
         margin-bottom: 100px;
 
-        .login-form-title {
+        .register-form-title {
             font-size: 22px;
             font-weight: bold;
             color: var(--el-text-color-regular);
