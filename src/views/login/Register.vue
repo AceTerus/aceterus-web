@@ -91,41 +91,9 @@ onUnmounted(() => {
   window.removeEventListener('keydown', keyDown, false)
 })
 
+// 登录
 async function register() {
-    // 校验数据有效性
-    if (!formRef.value) return
-    await formRef.value.validate(async (valid, fields) => {
-        if (!valid) {
-            return
-        }
-
-        // 登录
-        let { data: { code, data } } = await http.post('register', {
-            username: form.username,
-            email: form.email,
-            pwd: form.pwd
-        })
-        if (code !== 200) {
-            return
-        }
-
-        // 缓存令牌
-        const userStore = useUserStore()
-        userStore.id = data.userId
-        userStore.name = data.userName
-        userStore.type = data.type
-        userStore.accessToken = data.accessToken
-
-        // 缓存数据字典
-        let { data: { data: dictData } } = await http.post('dict/listpage', {
-            pageSize: 100
-        })
-        const dictStore = useDictStore()// 字典缓存
-        dictStore.dicts = dictData.list
-
-        // 跳转到首页
-        router.push("/validation")
-    })
+    router.push("/validation")
 }
 
 </script>
