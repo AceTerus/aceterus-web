@@ -173,13 +173,16 @@ onMounted(async () => {
     user.orgName = data2.orgName
     
     // 获取我的练习
-    exer.id = parseInt(route.params.exerId as string)
-    let { data: { data: data3 } } = await http.post("myExer/get", { exerId: exer.id })
-    exer.startTime = dayjs(data3.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-    exer.endTime = dayjs(data3.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-    exer.rmkState = data3.rmkState
+    // exer.id = parseInt(route.params.exerId as string)
+    const exerids = route.params.exerId.split('&').map(Number);
+    console.log(exerids)
+    // console.log(exer.id)
+    // let { data: { data: data3 } } = await http.post("myExer/get", { exerId: exer.id })
+    // exer.startTime = dayjs(data3.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+    // exer.endTime = dayjs(data3.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+    // exer.rmkState = data3.rmkState
 
-let { data: { data } } = await http.post("myExer/questionList", { exerId: [1,3] })
+let { data: { data } } = await http.post("myExer/questionList", { exerId: exerids })
     data.userAnswers = []
     data.userScore = null
     exer.questionIds.push(...data)

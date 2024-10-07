@@ -6,10 +6,11 @@
             </el-image>
             <span class="header-top-orgname">{{ ent.name }}</span>
             <el-menu default-active="/" mode="horizontal" :router="true" class="header-top-menu">
-                <el-menu-item index="/">首页</el-menu-item>
+                <el-menu-item index="/">Mock Exam</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exer">练习</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExer">练习</el-menu-item>
+                <el-menu-item v-if="userStore.type === 1" index="/myExer">Topic-Wise Practice</el-menu-item>
+                <el-menu-item v-if="userStore.type === 1" index="/myExam">History</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exam">考试</el-menu-item>
                 <el-menu-item v-if="userStore.type === 3" index="/myMark">阅卷</el-menu-item>
                 <el-sub-menu v-if="userStore.type === 0" index="/user">

@@ -202,16 +202,20 @@ async function query(searchterm: any) {
 // 考试进入
 async function examIn(myExam: any) {
     if (myExam.state !== 3) {
-        let { data: { data } } = await http.post("login/sysTime", {  })
-        let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-        let examStartTim = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        if (examStartTim.getTime() > curTime.getTime()) {
-            ElMessage.error('考试未开始，请等待...')
-            return
-        }
+        // let { data: { data } } = await http.post("login/sysTime", {  })
+        // let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // let examStartTim = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // if (examStartTim.getTime() > curTime.getTime()) {
+        //     ElMessage.error('考试未开始，请等待...')
+        //     return
+        // }
+        console.log(myExam.id)
+        let { data: { data } } = await http.post("exam/addUser", { examId: myExam.id })
+        console.log(data)
+
     }
 
-    router.push(`/myExam/paper/${myExam.examId}`)
+    // router.push(`/myExam/paper/${myExam.examId}`)
     // if (screenfull.isEnabled) {
     //     screenfull.request();
     //     screenfull.onchange((e) => {

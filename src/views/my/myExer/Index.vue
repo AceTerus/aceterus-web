@@ -1,41 +1,5 @@
 <template>
     <template v-if="$route.path === '/myExer'">
-        <el-form :inline="true" :model="queryForm" size="large" class="query">
-            <el-form-item label="">
-                <el-input v-model="queryForm.name" placeholder="请输入名称" />
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="query">
-                    <Iconfont icon="icon-search" color="white">&nbsp;查询</Iconfont>
-                </el-button>
-            </el-form-item>
-        </el-form>
-        <div class="list">
-            <Gridadd v-if="listpage.list.length === 0" name="暂无练习" icon="icon-dongjie"/>
-            <Griddata 
-                v-for="myExer in listpage.list" 
-                :menu="[
-                    { name: `去练习`, icon: `icon-peixunkaoshi`, event: () => toExer(myExer) },
-                    ]"
-                >
-                <template #title>
-                    {{ myExer.name }}
-                </template>
-                <template #content>
-                    <div style="margin-bottom: 5px;text-align: center;">
-                        题库名称：{{ myExer.questionTypeName }}
-                    </div>
-                    <div style="margin-bottom: 5px;text-align: center;">
-                        练习时间：{{ myExer.startTime }} - {{ myExer.endTime }}
-                    </div>
-                    <el-row>
-                        <el-col :span="24">
-                            允许评论：{{ dictStore.getValue('STATE_YN', myExer.rmkState) }}
-                        </el-col>
-                    </el-row>
-                </template>
-            </Griddata>
-        </div>
         <div class="container">
             <div class="group">
                 <div class="label-wrapper">
@@ -69,67 +33,16 @@
                 </div>
             </div>
             <div class="group">
-                <div class="label-wrapper">
-                    <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                    <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
-                    <label>Group 2</label>
-                </div>
-                <div class="items">
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 2.1</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.1.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.1.2</label>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 2.2</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.2.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.2.2</label>
-                        </div>
-                    </div>
-                </div>
+                <!-- <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.1.1</label> -->
+                <!-- <label v-for="questionType in listpage.list"> -->
+                <!--     <input id="{{ questionType.name }}" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">{{ questionType.name }} -->
+                <!-- </label> -->
+                <label v-for="questionType in listpage.list" :key="questionType.name">
+                    <input :id="questionType.id" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">
+                    {{ questionType.name }}
+                </label>
             </div>
-            <div class="group">
-                <div class="label-wrapper">
-                    <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                    <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
-                    <label>Group 3</label>
-                </div>
-                <div class="items">
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 3.1</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 3.1.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 3.1.2</label>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 3.2</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 3.2.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 3.2.2</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <el-button type="primary" @click="toExer">Start Practice</el-button>
         </div>
         <el-pagination 
             v-model:current-page="listpage.curPage"
@@ -185,7 +98,7 @@ watch(() => route.path, (n, o) => {
 
 // 查询
 async function query() {
-    const { data: { code, data } } = await http.post('myExer/listpage', {
+    const { data: { code, data } } = await http.post('questionType/listpage', {
         name: queryForm.name,
         curPage: listpage.curPage,
         pageSize: listpage.pageSize,
@@ -199,23 +112,39 @@ async function query() {
     listpage.total = data.total
 }
 
+
+
 // 练习进入
-async function toExer(exer: any) {
-    let { data: { data } } = await http.post("login/sysTime", {  })
-        let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-        let exerStartTim = dayjs(exer.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        if (exerStartTim.getTime() > curTime.getTime()) {
-            ElMessage.error('练习未开始，请等待...')
-            return
-        }
+async function toExer() {
+    // let { data: { data } } = await http.post("login/sysTime", {  })
+    const checkboxes = document.querySelectorAll('.subitem-checkbox');
+    
+        var checkedIds = [];
 
-        let exerEndTime = dayjs(exer.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        if (curTime.getTime() > exerEndTime.getTime()) {
-            ElMessage.error('练习已结束...')
-            return
-        }
+    // Loop through all checkboxes and check if they're checked
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                checkedIds.push(checkbox.id);  // Add the id of the checked checkbox
+            }
+        });
+        // const intList = [1, 2, 3, 4, 5];
+        cehckIds.sort();
+        const encodedString = checkedIds.join('&');  // "1,2,3,4,5"
 
-        router.push(`/myExer/paper/${ exer.id }`)
+        router.push(`/myExer/paper/${ encodedString }`)
+        // let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // let exerStartTim = dayjs(exer.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // if (exerStartTim.getTime() > curTime.getTime()) {
+        //     ElMessage.error('练习未开始，请等待...')
+        //     return
+        // }
+
+        // let exerEndTime = dayjs(exer.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // if (curTime.getTime() > exerEndTime.getTime()) {
+        //     ElMessage.error('练习已结束...')
+        //     return
+        // }
+
 }
 
 // Function to handle dropdown button click
