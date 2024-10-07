@@ -6,39 +6,6 @@
                     <span>考试概览</span>
                 </template>
                 <div class="home-left-top-content">
-                    <div v-if="userStore.type === 0 || userStore.type === 2" class="home-left-top-content-item" @click="$router.push('/exam')">
-                        <Iconfont icon="icon-diannao" :size="24" color="#09c8bd;" :width="48" :height="48"
-                            background-color="#e5faf8" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.examNum }}</div>
-                            <div class="home-left-top-content-item-desc">创建考试（场）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 0 || userStore.type === 2" class="home-left-top-content-item" @click="$router.push('/questionType')">
-                        <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
-                            background-color="#fff4e7" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.questionNum }}</div>
-                            <div class="home-left-top-content-item-desc">创建试题（道）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 0 || userStore.type === 2" class="home-left-top-content-item" @click="$router.push('/exer')">
-                        <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
-                            background-color="#e5f4fd" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.exerNum }}</div>
-                            <div class="home-left-top-content-item-desc">创建练习（场）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 0 || userStore.type === 2" class="home-left-top-content-item" @click="$router.push(userStore.type === 0 ? '/user' : '/examUser')">
-                        <Iconfont icon="icon-ai-users" :size="29" color="#eb5b5b;" :width="48" :height="48"
-                            background-color="#fdeeee" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.userNum }}</div>
-                            <div class="home-left-top-content-item-desc">{{ userStore.type === 0 ? '创建' : '管理' }}用户（个）</div>
-                        </div>
-                    </div>
-
                     <div v-if="userStore.type === 1" class="home-left-top-content-item" @click="$router.push('/myExam')">
                         <Iconfont icon="icon-diannao" :size="24" color="#09c8bd;" :width="48" :height="48"
                             background-color="#e5faf8" />
@@ -71,38 +38,22 @@
                             <div class="home-left-top-content-item-desc">最高排名（名）</div>
                         </div>
                     </div>
-                    <div v-if="userStore.type === 3" class="home-left-top-content-item" @click="$router.push('/myMark')">
-                        <Iconfont icon="icon-diannao" :size="24" color="#09c8bd;" :width="48" :height="48"
-                            background-color="#e5faf8" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.examNum }}</div>
-                            <div class="home-left-top-content-item-desc">总阅考试（场）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 3" class="home-left-top-content-item" @click="$router.push('/myMark')">
-                        <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
-                            background-color="#fff4e7" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.unMarkNum }}</div>
-                            <div class="home-left-top-content-item-desc">待阅考试（场）</div>
-                        </div>
-                    </div>
                 </div>
             </el-card>
         </div>
         <div class="button-container">
-            <button>Button 1</button>
-            <button>Button 2</button>
-            <button>Button 3</button>
-            <button>Button 4</button>
-            <button>Button 5</button>
+
+            <el-button type="primary" @click="query(false)">All</el-button>
+            <el-button type="primary" @click="query('Sejarah')">Sejarah</el-button>
+            <el-button type="primary" @click="query('Maths')">Maths</el-button>
+            <el-button type="primary" @click="query('Biology')">Biology</el-button>
         </div>
         <el-form :inline="true" :model="queryForm" size="large" class="query">
             <el-form-item label="">
                 <el-input v-model="queryForm.examName" placeholder="请输入考试名称" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="query">
+                <el-button type="primary" @click="query()">
                     <Iconfont icon="icon-search" color="white">&nbsp;查询</Iconfont>
                 </el-button>
             </el-form-item>
@@ -112,24 +63,25 @@
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
-                    {   name: `${myExam.state === 3 ? '查阅试卷' : '进入考试'}`, 
-                        icon: `${myExam.state === 3 ? 'icon-search' : 'icon-peixunkaoshi'}`, 
+                    {   name: 'Start New Paper', 
+                        icon: 'icon-peixunkaoshi', 
                         event: () => examIn(myExam)
                     },
                     ]" 
                 >
                 <template #tag>
-                    <CountDown v-if="myExam.state === 1 && myExam.markState === 1" :expireTime="dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()" preTxt="距考试："></CountDown>
+                    <el-tag size="small">{{ myExam.id }}</el-tag>
+                    <!-- <CountDown v-if="myExam.state === 1 && myExam.markState === 1" :expireTime="dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()" preTxt="距考试："></CountDown>
                     <template v-else>
                         <el-tag size="small">{{ dictStore.getValue("EXAM_STATE", myExam.state) }}</el-tag>
                         &nbsp;<el-tag type="success" size="small">{{ dictStore.getValue("MARK_STATE", myExam.markState) }}</el-tag>
-                    </template>
+                    </template> -->
                 </template>
                 <template #title>
-                    {{ myExam.examName }}
+                    {{ myExam.name }}
                 </template>
                 <template #content>
-                    <div style="margin-bottom: 10px;text-align: center;">
+                    <!-- <div style="margin-bottom: 10px;text-align: center;">
                         考试时间：{{ myExam.examStartTime }}（{{ Math.ceil((dayjs(myExam.examEndTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime() 
                                         - dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime()) / (60 * 1000)) + '分钟' }}）
                     </div>
@@ -146,7 +98,7 @@
                         <el-col :span="8">
                             排名：{{ myExam.no || '-' }} / {{ myExam.userNum || '-' }}
                         </el-col>
-                    </el-row>
+                    </el-row> -->
                 </template>
             </Griddata>
         </div>
@@ -200,7 +152,7 @@ const custom = reactive({// 自定义内容
 const dictStore = useDictStore() // 字典缓存
 const route = useRoute()
 const queryForm = reactive({// 查询表单
-    examName: '', // 考试名称
+    name: '', // 考试名称
 })
 const listpage = reactive({// 分页列表
     curPage: 1,
@@ -210,21 +162,29 @@ const listpage = reactive({// 分页列表
 })
 
 // 组件挂载完成后，执行如下方法
-onMounted(() => {
-    query()
-})
+// onMounted(() => {
+// })
 
 // 如果是跳转到列表页，重新查询
-watch(() => route.path, (n, o) => {
-    if (n === '/myExam') {
-        query()
-    }
-})
+// watch(() => route.path, (n, o) => {
+//     if (n === '/myExam') {
+//         query()
+//     }
+// })
 
+// async function qsej() {
+//     queryForm.examName = "qq"
+//     query()
+// }
 // 查询
-async function query() {
-    const { data: { code, data } } = await http.post('myExam/listpage', {
-        examName: queryForm.examName,
+async function query(searchterm: any) {
+    if(searchterm == false){
+        queryForm.examName = ""
+    }else{
+        queryForm.examName = searchterm || queryForm.examName
+    }
+    const { data: { code, data } } = await http.post('exam/listpage', {
+        name: queryForm.examName,
         curPage: listpage.curPage,
         pageSize: listpage.pageSize,
     })
@@ -242,16 +202,20 @@ async function query() {
 // 考试进入
 async function examIn(myExam: any) {
     if (myExam.state !== 3) {
-        let { data: { data } } = await http.post("login/sysTime", {  })
-        let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-        let examStartTim = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        if (examStartTim.getTime() > curTime.getTime()) {
-            ElMessage.error('考试未开始，请等待...')
-            return
-        }
+        // let { data: { data } } = await http.post("login/sysTime", {  })
+        // let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // let examStartTim = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
+        // if (examStartTim.getTime() > curTime.getTime()) {
+        //     ElMessage.error('考试未开始，请等待...')
+        //     return
+        // }
+        console.log(myExam.id)
+        let { data: { data } } = await http.post("exam/addUser", { examId: myExam.id })
+        console.log(data)
+
     }
 
-    router.push(`/myExam/paper/${myExam.examId}`)
+    // router.push(`/myExam/paper/${myExam.examId}`)
     // if (screenfull.isEnabled) {
     //     screenfull.request();
     //     screenfull.onchange((e) => {
@@ -268,38 +232,7 @@ onMounted(async () => {
         router.push('/login')
     }
 
-    // 更新日历日期
-    let { data: { data: data } } = await http.post("login/sysTime", {  })
-    let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-    calendar.value = curTime
-
     // 任务查询
-    if (userStore.type === 0) {// 如果是admin登录
-        let { data: { data } } = await http.post("report/admin/home", {  })// 首页统计
-        statis.examNum = data.examNum
-        statis.questionNum = data.questionNum
-        statis.exerNum = data.exerNum
-        statis.userNum = data.userNum
-
-        let { data: { data: data2 } } = await http.post("myMark/listpage", { pageSize: 100, todo: true })// 未完成的考试列表
-        todoExamList.value.push(...data2.list) 
-
-        let { data: { data: data3 } } = await http.post("exer/listpage", { pageSize: 100, todo: true })// 未完成的练习列表
-        todoExerList.value.push(...data3.list) 
-    }
-    if (userStore.type === 2) {// 如果是子管理员登录
-        let { data: { data } } = await http.post("report/subAdmin/home", {  })// 首页统计
-        statis.examNum = data.examNum
-        statis.questionNum = data.questionNum
-        statis.exerNum = data.exerNum
-        statis.userNum = data.userNum
-
-        let { data: { data: data2 } } = await http.post("myMark/listpage", { pageSize: 100, todo: true })// 未完成的考试列表
-        todoExamList.value.push(...data2.list) 
-
-        let { data: { data: data3 } } = await http.post("exer/listpage", { pageSize: 100, todo: true })// 未完成的练习列表
-        todoExerList.value.push(...data3.list) 
-    }
     if (userStore.type === 1) {// 如果是用户登录
         let { data: { data } } = await http.post("report/user/home", {  })// 首页统计
         statis.examNum = data.examNum
@@ -312,14 +245,6 @@ onMounted(async () => {
 
         let { data: { data: data3 } } = await http.post("myExer/listpage", { pageSize: 100, todo: true })// 未完成的练习列表
         todoExerList.value.push(...data3.list)
-    }
-    if (userStore.type === 3) {// 如果是阅卷用户登录
-        let { data: { data } } = await http.post("report/markUser/home", {  })// 首页统计
-        statis.examNum = data.examNum
-        statis.unMarkNum = data.unMarkNum
-
-        let { data: { data: data2 } } = await http.post("myMark/listpage", { pageSize: 100, todo: true })// 未完成的考试列表
-        todoExamList.value.push(...data2.list) 
     }
 
     // 公告查询
@@ -336,67 +261,11 @@ onMounted(async () => {
     bulletinListpage.total = data2.total
 
     // 自定义信息查询
-    let { data: { data:data3 } } = await http.post('login/custom', { })
-    custom.title = data3.title
-    custom.content = data3.content.replaceAll('\n', '<br/>')
+    // let { data: { data:data3 } } = await http.post('login/custom', { })
+    // custom.title = data3.title
+    // custom.content = data3.content.replaceAll('\n', '<br/>')
+    query()
 })
-
-// 监听属性
-watch(() => calendar.value, async (n, o) => {
-    // 日历翻页时，查询指定月的考试列表和练习列表
-    if (n && o && dayjs(n).format('YYYY-MM') === dayjs(o).format('YYYY-MM')) {// 如果是同一个月份不处理
-        return
-    }
-
-    let startTime = dayjs(n).startOf('month').format('YYYY-MM-DD HH:mm:ss')
-    let endTime = dayjs(n).endOf('month').format('YYYY-MM-DD HH:mm:ss')
-    taskList.value.length = 0
-    if (userStore.type === 0) {
-        let { data: { data } } = await http.post("myMark/listpage", { pageSize: 100, startTime, endTime })
-        taskList.value.push(...data.list.map((task: any) => {
-            task.startTime = task.examStartTime
-            task.endTime = task.examEndTime
-            task.name = task.examName
-            task.type = 1
-            return task
-        })) 
-
-        let { data: { data: data2 } } = await http.post("exer/listpage", { pageSize: 100, startTime, endTime })
-        taskList.value.push(...data2.list.map((task: any) => {
-            task.type = 2
-            return task
-        })) 
-    } else if (userStore.type === 1) {
-        let { data: { data } } = await http.post("myExam/listpage", { pageSize: 100, startTime, endTime })
-        taskList.value.push(...data.list.map((task: any) => {
-            task.startTime = task.examStartTime
-            task.endTime = task.examEndTime
-            task.name = task.examName
-            task.type = 1
-            return task
-        })) 
-
-        let { data: { data: data2 } } = await http.post("myExer/listpage", { pageSize: 100, startTime, endTime })
-        taskList.value.push(...data2.list.map((task: any) => {
-            task.type = 2
-            return task
-        })) 
-    }
-})
-
-// 日历变更时间
-function calendarUpdate(curDate: string) {
-    calendarRef.value.selectDate(curDate)
-}
-
-// 是否当月日期
-function hasCurMonth(curDate: Date) {
-    return dayjs(curDate).isBetween(
-        dayjs(calendar.value).startOf('month').toDate(),// 当月-01 00:00:00
-        dayjs(calendar.value).endOf('month').toDate(),// 当月-31 23:59:59
-        null, 
-        '[]')// 包含边界
-}
 
 // 任务列表获取
 function getTaskList(curDate: Date) {
@@ -417,48 +286,6 @@ function bulletinShow(bulletin: any) {
     })
 }
 
-// 去考试
-async function toExam(myExam: any) {
-    let examStartTime = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-    let { data: { data } } = await http.post("login/sysTime", {  })
-    let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-    if (curTime.getTime() < examStartTime.getTime()) {
-        ElMessage.error('考试未开始，请等待...')
-        return
-    }
-
-    router.push(`/myExam/paper/${myExam.examId}`)
-}
-
-// 去阅卷
-async function toMark(myMark: any) {
-    let examMarkStartTime = dayjs(myMark.examMarkStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-    let { data: { data } } = await http.post("login/sysTime", {  })
-    let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-    if (curTime.getTime() < examMarkStartTime.getTime()) {
-        ElMessage.error('阅卷未开始，请等待...')
-        return
-    }
-
-    if (userStore.type === 3) {
-        router.push(`/myMark/paper/${ myMark.examId }`)
-    } else {
-        router.push(`/exam/mark/${ myMark.examId }`)
-    }
-}
-
-// 去练习
-async function toExer(myExer: any) {
-    let startTime = dayjs(myExer.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-    let { data: { data } } = await http.post("login/sysTime", {  })
-    let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-    if (curTime.getTime() < startTime.getTime()) {
-        ElMessage.error('练习未开始，请等待...')
-        return
-    }
-
-    router.push(`/myExer/paper/${ myExer.id }`)
-}
 </script>
 
 <style lang="scss" scoped>
@@ -714,6 +541,22 @@ button {
   
 button:active {
     background-color: #263bb3;
+}
+
+.el-header {
+    display: initial;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    :deep(.grid-content) {
+        width: 100%;
+        .el-col {
+            text-align: center;
+        }
+    }
 }
   
 </style>
