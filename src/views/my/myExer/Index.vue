@@ -128,7 +128,7 @@ async function toExer() {
             }
         });
         // const intList = [1, 2, 3, 4, 5];
-        cehckIds.sort();
+        checkedIds.sort();
         const encodedString = checkedIds.join('&');  // "1,2,3,4,5"
 
         router.push(`/myExer/paper/${ encodedString }`)

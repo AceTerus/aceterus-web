@@ -209,9 +209,10 @@ async function examIn(myExam: any) {
         //     ElMessage.error('考试未开始，请等待...')
         //     return
         // }
-        console.log(myExam.id)
-        let { data: { data } } = await http.post("exam/addUser", { examId: myExam.id })
-        console.log(data)
+        const { data: { data: data4 } } = await http.post('exam/addUser', {
+            examId: myExam.id,
+        })
+        router.push(`/myExam/paper/${myExam.id}`)
 
     }
 
