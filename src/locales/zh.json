@@ -10,6 +10,7 @@
       "reg": "Register",
       "emailpls": "Please enter your email",
       "cpwdpls": "Please confirm your password",
-      "pwdmatch": "Passwords do not match"
+      "pwdmatch": "Passwords do not match",
+      "practice": "Start Practice"
     }
 }
