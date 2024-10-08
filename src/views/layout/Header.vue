@@ -48,45 +48,6 @@
             </el-dropdown>
         </div>
         <el-divider />
-        <div v-if="$route.path !== '/' && $route.path !== '/home'" class="header-bottom">
-            <el-breadcrumb separator="/" class="header-bottom-nav">
-                <template v-for="(r, index) in $route.matched" :key="index">
-                    <el-breadcrumb-item v-if="r.meta.title">
-                        <router-link v-if="index !== ($route.matched.length - 1)" :to="r.path">{{ r.meta.title }}</router-link>
-                        <span v-else>{{ r.meta.title }}</span>
-                    </el-breadcrumb-item>
-                </template>
-            </el-breadcrumb>
-            <el-menu :default-active="$route.path" mode="horizontal" :router="true" class="header-bottom-menu">
-                <template v-if="$route.path.indexOf('/questionType/') !== -1">
-                    <template v-if="$route.path.indexOf('/question/') !== -1">
-                        <el-menu-item :index="`/questionType/edit/${$route.params.questionTypeId}`">设置</el-menu-item>
-                        <el-menu-item :index="`/questionType/question/${$route.params.questionTypeId}`">列表</el-menu-item>
-                    </template>
-                    <template v-else-if="$route.path.indexOf('/add') === -1">
-                        <el-menu-item :index="`/questionType/edit/${$route.params.id}`">设置</el-menu-item>
-                        <el-menu-item :index="`/questionType/question/${$route.params.id}`">列表</el-menu-item>
-                    </template>
-                </template>
-                <template v-if="$route.path.indexOf('/exam/') !== -1 && $route.path.indexOf('/exam/add') === -1">
-                    <el-menu-item :index="`/exam/del/${$route.params.id}`">设置</el-menu-item>
-                    <el-menu-item :index="`/exam/edit/${$route.params.id}`">组卷</el-menu-item>
-                    <el-menu-item :index="`/exam/mark/${$route.params.id}`">阅卷</el-menu-item>
-                    <el-menu-item :index="`/exam/statis/${$route.params.id}`">统计</el-menu-item>
-                </template>
-            </el-menu>
-
-                <!-- <el-tabs v-model="a">
-                    <el-tab-pane
-                        v-for="(r, index) in $router.options.routes[0].children?.filter((cur) => {return cur.path === `${$route.path.split('/')[1]}`})[0].children"
-                        :key="r.path"
-                        :label="r.meta?.title" 
-                        :name="r.path" 
-                        @tab-click="tabClick"
-                    >
-                    </el-tab-pane>
-                </el-tabs> -->
-        </div>
     </div>
     <el-drawer title="密码修改" v-model="form.show" :size="550" @close="form.oldPwd = ''; form.newPwd = '';">
         <el-form ref="formRef" :model="form" :rules="formRules" label-width="100" size="large">
@@ -276,44 +237,5 @@ async function pwdUpdate() {
         margin: 0;
     }
 
-    .header-bottom {
-        width: 1200px;
-        height: 35px;
-        display: flex;
-
-        .header-bottom-nav {
-            margin: auto 10px;
-
-            a,
-            span {
-                font-size: 12px;
-            }
-        }
-
-        .header-bottom-menu {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-
-            .el-menu-item {
-                font-size: 13px;
-                font-weight: bold;
-                color: var(--el-text-color-regular);
-
-                &:hover,
-                &:focus {
-                    background-color: initial;
-                }
-            }
-
-            :deep(.el-sub-menu) {
-                .el-sub-menu__title {
-                    font-size: 13px;
-                    font-weight: bold;
-                    color: var(--el-text-color-regular);
-                }
-            }
-        }
-    }
 }
 </style>
