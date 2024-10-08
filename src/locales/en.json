@@ -1,3 +1,9 @@
 {
-    "login": "Login"
+    "message": {
+      "login": "Login",
+      "username": "Username",
+      "pwd": "Password",
+      "usernamepls": "Please enter your username",
+      "pwdpls": "Please enter your password"
+    }
 }

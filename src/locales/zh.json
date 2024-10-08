@@ -1,3 +1,9 @@
 {
-    "login": "登录"
+    "message": {
+      "login": "登录",
+      "username": "请输入账号",
+      "pwd": "请输入密码",
+      "usernamepls": "请输入账号",
+      "pwdpls": "请输入密码"
+    }
 }

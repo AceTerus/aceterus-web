@@ -17,7 +17,7 @@
                 <el-input v-model.trim="form.cpwd" type="cpassword" show-password placeholder="confirm password" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="register">{{ $t("login") }}</el-button>
+                <el-button type="primary" @click="register">{{ $t('message.login') }}</el-button>
             </el-form-item>
         </el-form>
     </div>
