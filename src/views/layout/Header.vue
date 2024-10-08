@@ -6,11 +6,11 @@
             </el-image>
             <span class="header-top-orgname">{{ ent.name }}</span>
             <el-menu default-active="/" mode="horizontal" :router="true" class="header-top-menu">
-                <el-menu-item index="/">Mock Exam</el-menu-item>
+                <el-menu-item index="/">{{ $t('message.mockexam') }}</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exer">练习</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExer">Topic-Wise Practice</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExam">History</el-menu-item>
+                <el-menu-item v-if="userStore.type === 1" index="/myExer">{{ $t('message.twpractice') }}</el-menu-item>
+                <el-menu-item v-if="userStore.type === 1" index="/myExam">{{ $t('message.history') }}</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exam">考试</el-menu-item>
                 <el-menu-item v-if="userStore.type === 3" index="/myMark">阅卷</el-menu-item>
                 <el-sub-menu v-if="userStore.type === 0" index="/user">
@@ -41,27 +41,27 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item command="pwdUpdate"><span class="iconfont icon-edit"></span>&nbsp;&nbsp;修改密码</el-dropdown-item>
-                        <el-dropdown-item command="out"><span class="iconfont icon-login-out" style="font-size: 14px;"></span>&nbsp;&nbsp;退出</el-dropdown-item>
+                        <el-dropdown-item command="pwdUpdate"><span class="iconfont icon-edit"></span>&nbsp;&nbsp;{{ $t('message.changepwd') }}</el-dropdown-item>
+                        <el-dropdown-item command="out"><span class="iconfont icon-login-out" style="font-size: 14px;"></span>&nbsp;&nbsp;{{ $t('message.logout') }}</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
         <el-divider />
     </div>
-    <el-drawer title="密码修改" v-model="form.show" :size="550" @close="form.oldPwd = ''; form.newPwd = '';">
+    <el-drawer :title="$t('message.changepwd')" v-model="form.show" :size="550" @close="form.oldPwd = ''; form.newPwd = '';">
         <el-form ref="formRef" :model="form" :rules="formRules" label-width="100" size="large">
-            <el-form-item label="旧密码" prop="oldPwd">
-                <el-input v-model.trim="form.oldPwd" type="password"  placeholder="请输入旧密码"/>
+            <el-form-item prop="oldPwd">
+                <el-input v-model.trim="form.oldPwd" type="password"  :placeholder="$t('message.oldpwd')"/>
             </el-form-item>
-            <el-form-item label="新密码" prop="newPwd">
-                <el-input v-model.trim="form.newPwd" type="password"  placeholder="请输入新密码"/>
+            <el-form-item prop="newPwd">
+                <el-input v-model.trim="form.newPwd" type="password"  :placeholder="$t('message.newpwd')"/>
             </el-form-item>
-            <el-form-item label="再次确认" prop="newPwd2">
-                <el-input v-model.trim="form.newPwd2" type="password"  placeholder="请输入新密码"/>
+            <el-form-item prop="newPwd2">
+                <el-input v-model.trim="form.newPwd2" type="password"  :placeholder="$t('message.cnewpwd')"/>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="pwdUpdate">修改</el-button>
+                <el-button type="primary" @click="pwdUpdate">{{ $t('message.change') }}</el-button>
             </el-form-item>
         </el-form>
     </el-drawer>

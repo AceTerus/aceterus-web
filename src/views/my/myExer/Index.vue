@@ -42,7 +42,7 @@
                     {{ questionType.name }}
                 </label>
             </div>
-            <el-button type="primary" @click="toExer">{{ $t('message.practice') }}</el-button>
+            <el-button type="primary" @click="toExer">Start Practice</el-button>
         </div>
         <el-pagination 
             v-model:current-page="listpage.curPage"

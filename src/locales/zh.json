@@ -6,11 +6,19 @@
       "usernamepls": "请输入账号",
       "pwdpls": "请输入密码",
       "email": "Email",
-      "cpwd": "Confirm password",
+      "cpwd": "Confirm Password",
       "reg": "Register",
       "emailpls": "Please enter your email",
       "cpwdpls": "Please confirm your password",
       "pwdmatch": "Passwords do not match",
-      "practice": "Start Practice"
+      "mockexam": "Mock Exam",
+      "twpractice": "Topic-Wise Practice",
+      "history": "History",
+      "changepwd": "修改密码",
+      "logout": "退出",
+      "oldpwd": "旧密码",
+      "newpwd": "新密码",
+      "cnewpwd": "再次确认",
+      "change": "修改"
     }
 }
