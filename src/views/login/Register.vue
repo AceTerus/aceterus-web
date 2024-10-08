@@ -5,19 +5,19 @@
                 欢迎登录
             </div>
             <el-form-item label="" prop="username">
-                <el-input v-model.trim="form.username" placeholder="username" />
+                <el-input v-model.trim="form.username" :placeholder="$t('message.username')" />
             </el-form-item>
             <el-form-item label="" prop="email">
-                <el-input v-model.trim="form.email" placeholder="email" />
+                <el-input v-model.trim="form.email" :placeholder="$t('message.email')" />
             </el-form-item>
             <el-form-item label="" prop="pwd">
-                <el-input v-model.trim="form.pwd" type="password" show-password placeholder="password" />
+                <el-input v-model.trim="form.pwd" type="password" show-password :placeholder="$t('message.pwd')" />
             </el-form-item>
              <el-form-item label="" prop="cpwd">
-                <el-input v-model.trim="form.cpwd" type="cpassword" show-password placeholder="confirm password" />
+                <el-input v-model.trim="form.cpwd" type="cpassword" show-password :placeholder="$t('message.cpwd')" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="register">{{ $t("login") }}</el-button>
+                <el-button type="primary" @click="register">{{ $t('message.reg') }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -30,6 +30,9 @@ import { useRouter } from 'vue-router'
 import http from "@/request/index"
 import { useUserStore } from '@/stores/user';
 import { useDictStore } from '@/stores/dict';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 // 定义变量
 const router = useRouter()
@@ -53,23 +56,23 @@ function logData() {
 
 const formRules = reactive<FormRules>({// 表单规则
     username: [
-        { required: true, message: '请输入账号', trigger: 'blur' },
+        { required: true, message: t('message.usernamepls'), trigger: 'blur' },
     ],
     email: [
-        { required: true, message: '请输入账号', trigger: 'blur' },
+        { required: true, message: t('message.emailpls'), trigger: 'blur' },
     ],
     pwd: [
-        { required: true, message: '请输入密码', trigger: 'blur' },
+        { required: true, message: t('message.pwdpls'), trigger: 'blur' },
     ],
     cpwd: [
-        { required: true, message: '请输入密码', trigger: 'blur' },
+        { required: true, message: t('message.cpwdpls'), trigger: 'blur' },
         { validator: validatePwd, trigger: 'blur' },
     ],
 })
 
 function validatePwd(rule, value, callback) {
     if (value !== form.value.pwd) {
-        callback(new Error('pws dont match'));
+        callback(new Error(t('message.pwdmatch')));
     } else {
         callback();
     }
@@ -93,7 +96,15 @@ onUnmounted(() => {
 
 // 登录
 async function register() {
-    router.push("/validation")
+    // 校验数据有效性
+    if (!formRef.value) return
+    await formRef.value.validate(async (valid, fields) => {
+        if (!valid) {
+            return
+        }
+    })
+
+    router.push("/verify-account")
 }
 
 </script>

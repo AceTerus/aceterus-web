@@ -1,3 +1,15 @@
 {
-    "login": "Login"
+    "message": {
+      "login": "Login",
+      "username": "Username",
+      "pwd": "Password",
+      "usernamepls": "Please enter your username",
+      "pwdpls": "Please enter your password",
+      "email": "Email",
+      "cpwd": "Confirm password",
+      "reg": "Register",
+      "emailpls": "Please enter your email",
+      "cpwdpls": "Please confirm your password",
+      "pwdmatch": "Passwords do not match"
+    }
 }

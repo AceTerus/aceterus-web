@@ -20,7 +20,7 @@ import zh from "./locales/zh.json";
 
 const i18n = createI18n({
     locale: 'en',
-    messages: { en, ms, zh },
+    messages: { en, zh },
   // something vue-i18n options here ...
 })
 

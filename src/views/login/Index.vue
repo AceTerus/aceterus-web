@@ -5,13 +5,13 @@
                 欢迎登录
             </div>
             <el-form-item label="" prop="loginName">
-                <el-input v-model.trim="form.loginName" placeholder="请输入账号" />
+                <el-input v-model.trim="form.loginName" :placeholder="$t('message.username')" />
             </el-form-item>
             <el-form-item label="" prop="pwd">
-                <el-input v-model.trim="form.pwd" type="password" show-password placeholder="请输入密码" />
+                <el-input v-model.trim="form.pwd" type="password" show-password :placeholder="$t('message.pwd')" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="login">{{ $t("login") }}</el-button>
+                <el-button type="primary" @click="login">{{ $t('message.login') }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -24,6 +24,9 @@ import { useRouter } from 'vue-router'
 import http from "@/request/index"
 import { useUserStore } from '@/stores/user';
 import { useDictStore } from '@/stores/dict';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 // 定义变量
 const router = useRouter()
@@ -34,10 +37,10 @@ const form = reactive({// 表单
 const formRef = ref<FormInstance>()// 表单引用
 const formRules = reactive<FormRules>({// 表单规则
     loginName: [
-        { required: true, message: '请输入账号', trigger: 'blur' },
+        { required: true, message: t('message.usernamepls'), trigger: 'blur' },
     ],
     pwd: [
-        { required: true, message: '请输入密码', trigger: 'blur' },
+        { required: true, message: t('message.pwdpls'), trigger: 'blur' },
     ],
 })
 const keyDown = (e:KeyboardEvent) => {
