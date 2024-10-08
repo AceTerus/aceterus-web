@@ -4,6 +4,12 @@
       "username": "请输入账号",
       "pwd": "请输入密码",
       "usernamepls": "请输入账号",
-      "pwdpls": "请输入密码"
+      "pwdpls": "请输入密码",
+      "email": "Email",
+      "cpwd": "Confirm password",
+      "reg": "Register",
+      "emailpls": "Please enter your email",
+      "cpwdpls": "Please confirm your password",
+      "pwdmatch": "Passwords do not match"
     }
 }
