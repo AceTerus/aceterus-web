@@ -11,8 +11,8 @@
                     <div>
                         <Iconfont icon="icon-jiangbei" :size="20" color="#F6961E;" :width="30" :height="30" :radius="5"
                             background-color="#FDF3E7" />
-                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore + '分' : '-' }}</span>
-                        <span class="paper-left-top-statis-txt">得分</span>
+                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore / myExam.examTotalScore : '-' }}</span>
+                        <span class="paper-left-top-statis-txt">{{ $t('message.score') }}</span>
                     </div>
                     <div>
                         <Iconfont icon="icon-shijianxuanzhong" :size="20" color="#F6961E;" :width="30" :height="30"
@@ -20,35 +20,19 @@
                         <span class="paper-left-top-statis-value">
                             {{ myExam.state === 3 ? timeDiff(myExam.examStartTime, myExam.examEndTime) : '-' }}
                         </span><!-- 交卷就有 -->
-                        <span class="paper-left-top-statis-txt">答题用时</span>
-                    </div>
-                    <div>
-                        <Iconfont icon="icon-approval-fulll" :size="20" color="#05CAC1;" :width="30" :height="30"
-                            :radius="5" background-color="#E3F3FF" />
-                        <span class="paper-left-top-statis-value">
-                            {{ scoreShow ? dictStore.getValue('ANSWER_STATE', myExam.answerState) : '-' }}
-                        </span>
-                        <span class="paper-left-top-statis-txt">成绩</span>
-                    </div>
-                    <div>
-                        <Iconfont icon="icon-shijianxuanzhong" :size="20" color="#327EF6;" :width="30" :height="30"
-                            :radius="5" background-color="#E3F3FF" />
-                        <span class="paper-left-top-statis-value">
-                            {{ rankShow ? `${myExam.no || '-'} / ${myExam.userNum}` : `-` }}
-                        </span>
-                        <span class="paper-left-top-statis-txt">排名</span>
+                        <span class="paper-left-top-statis-txt">{{ $t('message.timetaken') }}</span>
                     </div>
                 </div>
                 <div v-if="isAnswer" class="paper-left-top-time">
-                    <CountDown :expireTime="myExamEndTime" preTxt="距结束：" :remind="300" @end="finish()"
+                    <CountDown :expireTime="myExamEndTime" :preTxt="$t('message.timeleft')" :remind="300" @end="finish()"
                         @remind="exam.color = 'var(--el-color-danger)'" :color="exam.color"></CountDown>
                 </div>
-                <el-button v-if="isAnswer" type="primary" @click="finish">交卷</el-button>
-                <el-button type="primary" plain @click="$router.go(-1)">返回</el-button>
+                <el-button v-if="isAnswer" type="primary" @click="finish">{{ $t('message.submit') }}</el-button>
+                <el-button type="primary" plain @click="$router.go(-1)">{{ $t('message.exit') }}</el-button>
             </el-card>
             <el-card shadow="never" class="paper-left-bottom">
                 <el-divider>
-                    答题卡
+                    {{ $t('message.questions') }}
                 </el-divider>
                 <el-scrollbar height="calc(100vh - 475px)">
                     <template v-for="examQuestion in examQuestions">

@@ -19,6 +19,12 @@
       "oldpwd": "Old Password",
       "newpwd": "New Password",
       "cnewpwd": "Confirm New Password",
-      "change": "Change"
+      "change": "Change",
+      "submit": "Submit",
+      "timetaken": "Time taken",
+      "exit": "Exit",
+      "timeleft": "Time remaining: ",
+      "questions": "Questions",
+      "score": "Score"
     }
 }

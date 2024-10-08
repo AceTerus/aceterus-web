@@ -19,6 +19,12 @@
       "oldpwd": "旧密码",
       "newpwd": "新密码",
       "cnewpwd": "再次确认",
-      "change": "修改"
+      "change": "修改",
+      "submit": "交卷",
+      "timetaken": "答题用时",
+      "exit": "返回",
+      "timeleft": "距结束：",
+      "questions": "答题卡",
+      "score": "得分"
     }
 }
