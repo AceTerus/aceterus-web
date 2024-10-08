@@ -104,7 +104,7 @@ async function register() {
         }
     })
 
-    router.push("/validation")
+    router.push("/verify-account")
 }
 
 </script>

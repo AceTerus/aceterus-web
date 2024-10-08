@@ -490,8 +490,8 @@ const router = createRouter({
             component: () => import('../views/login/Register.vue'),
         },
         {
-            path: '/validation',
-            component: () => import('../views/login/ValidationMessage.vue'),
+            path: '/verify-account',
+            component: () => import('../views/login/VerificationMessage.vue'),
         },
     ]
 })
