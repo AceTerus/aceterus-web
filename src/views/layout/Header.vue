@@ -5,8 +5,8 @@
                 <template #error>logo</template>
             </el-image>
             <span class="header-top-orgname">{{ ent.name }}</span>
-            <el-menu default-active="/" mode="horizontal" :router="true" class="header-top-menu">
-                <el-menu-item index="/">{{ $t('message.mockexam') }}</el-menu-item>
+            <el-menu default-active="$route.path" mode="horizontal" :router="true" class="header-top-menu">
+                <el-menu-item index="/home">{{ $t('message.mockexam') }}</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exer">练习</el-menu-item>
                 <el-menu-item v-if="userStore.type === 1" index="/myExer">{{ $t('message.twpractice') }}</el-menu-item>
