@@ -102,6 +102,11 @@ import { ElMessageBox, type Action } from 'element-plus';
 import { useRoute } from 'vue-router'
 import { useDictStore } from '@/stores/dict';
 import { useRouter } from 'vue-router'
+
+import * as marked from 'marked'
+import markedKatex from 'marked-katex-extension';
+import 'katex/dist/katex.min.css'
+marked.use(markedKatex({}));
 // 定义变量
 const route = useRoute()
 const router = useRouter()
@@ -172,6 +177,32 @@ onMounted(async () => {
     myExam.answerState = data.answerState
     myExam.no = data.no
     myExam.userNum = data.userNum
+
+    const elements = [
+      ...document.getElementsByClassName("question-title-txt"),
+      ...document.getElementsByClassName("options-txt")
+    ];
+
+    // if you update here, update exam/exer page too
+    if (elements.length > 0) {
+      Array.from(elements).forEach(element => {
+
+        let parsed = marked.parse(element.innerHTML); // Fix: render innerHTML content of the element
+        console.log(parsed)
+        element.innerHTML = parsed;
+
+        Array.from(element.getElementsByTagName("img")).forEach(image => {
+          const figure = document.createElement('figure');
+          figure.appendChild(image.cloneNode(true));
+          const figcaption = document.createElement('figcaption');
+          figcaption.innerHTML = marked.parse(image.alt);
+          figure.appendChild(figcaption);
+          image.parentNode.replaceChild(figure, image);
+        });
+      });
+
+
+    }
     
 })
 // 组件卸载完成后，执行如下方法

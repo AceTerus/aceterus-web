@@ -39,7 +39,7 @@
             :errShow="errShow"
             @change="(value: string[]) => emit('change', value)"
             />
-        <!-- 单选题选项 -->
+         <!-- 单选题选项 -->
         <el-radio-group 
             v-if="type === 1" 
             :modelValue="userAnswerShow ? (userAnswers[0] || '') : (answers[0] || '')"
@@ -47,8 +47,11 @@
             @update:modelValue="(value: string) => userAnswers[0] = value"
             :disabled="!editable"
             >
-            <el-radio v-for="(option, index) in options" :key="index" :label="`${optionLabs[index]}`">
-                <div v-html="`${optionLabs[index]}、${option}`" :style="{ color: errColor(optionLabs[index]) }"/>
+            <el-radio v-for="(option, index) in options" :key="index" :label="`${optionLabs[index]}`" :style="{ color: errColor(optionLabs[index]) }">
+                <div :style="{ display: 'flex', alignItems: 'flex-start' }">
+                    <span :style="{ marginRight: '1em' }" v-html="`<p>${optionLabs[index]}.</p>`"/>
+                    <span class="options-txt" v-html="`${option}`"/>
+                </div>
             </el-radio>
         </el-radio-group>
         <!-- 多选题选项 -->
@@ -91,7 +94,7 @@
             />
         <div class="question-paper-bottom-right">
             <slot name="bottom-right"></slot>
-        </div>
+        </div> 
         <slot name="bottom"></slot>
     </div>
 </template>
@@ -312,6 +315,20 @@ function escape2Html(txt: string|string[]) {
             box-shadow: 0 0 0 1px var(--el-color-primary) inset;
         }
     }
+
+    :deep(p) {
+        margin: 0.5em;
+    }
+    :deep(figure) {
+        width: fit-content;
+    }
+    :deep(figcaption) {
+        text-align: center;
+    }
+    :deep(img) {
+        margin: 0;
+        max-height: 20em;
+    }
 }
 
 .question-list-bottom-right,
@@ -321,4 +338,5 @@ function escape2Html(txt: string|string[]) {
     right: 15px;
     bottom: 11px;
 }
+
 </style>

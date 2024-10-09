@@ -17,6 +17,8 @@
     "echarts": "~5.4.1",
     "element-plus": "~2.3.0",
     "lodash": "~4.17.21",
+    "marked": "^14.1.2",
+    "marked-katex-extension": "^5.1.2",
     "pinia": "~2.0.26",
     "pinia-plugin-persist": "~1.0.0",
     "qs": "~6.11.0",

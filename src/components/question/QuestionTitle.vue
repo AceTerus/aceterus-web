@@ -1,8 +1,8 @@
 <template>
     <div :id="`question-${props.no}`" class="question-title">
-        <span>{{ no ? `${no}、` : '' }}</span>
+        <div>{{ no ? `Question ${no}` : '' }}</div><br>
         <template v-for="(title, index) in titles">
-            <span v-if="title.type === 'txt'" v-html="title.value"></span>
+            <div v-if="title.type === 'txt'" v-html="title.value" class="question-title-txt"></div>
             <el-input 
                 v-else 
                 :key="index" 
@@ -13,7 +13,7 @@
                 @input="(value: string) => emit('change', userAnswers)" 
                 ></el-input>
         </template>
-        <span>（{{ score }}分）</span>
+        <!-- <span>（{{ score }}分）</span> -->
         <span 
             v-if="errShow" 
             :class="`iconfont ${score === userScore ? 'icon-duigoux' : userScore === 0 ? 'icon-cuo' : 'icon-bandui'}`" 
@@ -24,7 +24,8 @@
 </template>
   
 <script lang="ts" setup>
-import { ref, computed, watchEffect, watch } from 'vue'
+import { ref, computed, watchEffect, watch, onMounted } from 'vue'
+
 
 // 定义变量
 const emit = defineEmits<{
@@ -118,7 +119,11 @@ const titles = computed(() => {
 </script>
   
 <style lang="scss">
+.question-title .katex {
+    text-align: left;
+}
 .question-title {
+    white-space: pre-wrap;
     font-size: 13px;
     font-weight: bold;
     color: var(--el-text-color-primary);

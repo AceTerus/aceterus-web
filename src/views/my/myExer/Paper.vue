@@ -123,6 +123,11 @@ import dayjs from 'dayjs';
 import CountDown from '@/components/CountDown.vue';
 import { useUserStore } from '@/stores/user';
 
+import * as marked from 'marked'
+import markedKatex from 'marked-katex-extension';
+import 'katex/dist/katex.min.css'
+marked.use(markedKatex({}));
+
 // 定义变量
 const userStore = useUserStore()
 const route = useRoute()
@@ -190,6 +195,9 @@ let { data: { data } } = await http.post("myExer/questionList", { exerId: exerid
     if (exer.questionIds.length) {// 显示第一个
         questionView(0)
     }
+// onMounted( async() => {
+// });
+
 })
 
 // 监听属性
@@ -250,7 +258,36 @@ async function questionView(index: number) {
     rmkListpage.curPage = 1
     rmkListpage.cache = []
     rmkListpage.list = []
-    rmkQuery()
+    await rmkQuery()
+    const elements = [
+      ...document.getElementsByClassName("question-title-txt"),
+      ...document.getElementsByClassName("options-txt")
+    ];
+
+    // if you update here, update exam/exer page too
+    if (elements.length > 0) {
+      Array.from(elements).forEach(element => {
+
+        let parsed = marked.parse(element.innerHTML); // Fix: render innerHTML content of the element
+        console.log(parsed)
+        element.innerHTML = parsed;
+
+        Array.from(element.getElementsByTagName("img")).forEach(image => {
+          const figure = document.createElement('figure');
+          figure.appendChild(image.cloneNode(true));
+          const figcaption = document.createElement('figcaption');
+          figcaption.innerHTML = marked.parse(image.alt);
+          figure.appendChild(figcaption);
+          image.parentNode.replaceChild(figure, image);
+        });
+      });
+
+
+    }
+
+
+
+
 }
 
 /**
