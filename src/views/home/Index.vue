@@ -66,7 +66,7 @@
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
-                    {   name: 'Start New Paper', 
+                    {   name: 'Start Exam', 
                         icon: 'icon-peixunkaoshi', 
                         event: () => examIn(myExam)
                     },

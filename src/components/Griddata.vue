@@ -57,7 +57,6 @@ defineProps<{
     width: 380px;
     height: 175px;
     position: relative;
-    cursor: pointer;
 
     .grid-tag {
         position: absolute;

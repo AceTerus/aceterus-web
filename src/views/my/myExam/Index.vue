@@ -23,7 +23,7 @@
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
-                    {   name: `${myExam.state === 3 ? '查阅试卷' : '进入考试'}`, 
+                    {   name: `${myExam.state === 3 ? $t('message.review') : $t('message.startpaper')}`, 
                         icon: `${myExam.state === 3 ? 'icon-search' : 'icon-peixunkaoshi'}`, 
                         event: () => examIn(myExam)
                     },
