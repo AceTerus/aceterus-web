@@ -2,10 +2,10 @@
     <div class="fp">
         <el-form ref="formRef" :model="form" :rules="formRules" class="fp-form" size="large">
             <div class="fp-form-title">
-                {{ $t('message.verifyacc') }}
+                {{ $t('message.forgotpwd') }}
             </div>
             <div class="fp-form-text">
-                uh check ur inbox
+                insert message later
             </div>
         </el-form>
     </div>

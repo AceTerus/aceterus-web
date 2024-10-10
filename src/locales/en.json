@@ -25,6 +25,21 @@
       "exit": "Exit",
       "timeleft": "Time remaining: ",
       "questions": "Questions",
-      "score": "Score"
+      "score": "Score",
+      "forgotpwd": "Forgot password?",
+      "noacc": "Don't have an account? Register here",
+      "hvacc": "Already have an account? Login here",
+      "verifyacc": "Verify your account",
+      "all": "All",
+      "sejarah": "Sejarah",
+      "math": "Mathematics",
+      "bio": "Biology",
+      "chem": "Chemistry",
+      "physics": "Physics",
+      "search": "Search",
+      "searchbar": "Search for exam papers",
+      "viewans": "View Answer",
+      "review": "Review",
+      "startpaper": "Start Paper"
     }
 }

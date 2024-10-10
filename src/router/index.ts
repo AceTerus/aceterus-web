@@ -493,6 +493,10 @@ const router = createRouter({
             path: '/verify-account',
             component: () => import('../views/login/VerificationMessage.vue'),
         },
+        {
+            path: '/forgot-password',
+            component: () => import('../views/login/ForgotPassword.vue'),
+        },
     ]
 })
 

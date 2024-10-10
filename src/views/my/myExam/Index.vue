@@ -1,12 +1,20 @@
 <template>
     <template v-if="$route.path === '/myExam'">
-        <el-form :inline="true" :model="queryForm" size="large" class="query">
-            <el-form-item label="">
-                <el-input v-model="queryForm.examName" placeholder="请输入考试名称" />
+        <div class="button-container">
+            <el-button type="primary" @click="query(false)">{{ $t('message.all') }}</el-button>
+            <el-button type="primary" @click="query('Sejarah')">{{ $t('message.sejarah') }}</el-button>
+            <el-button type="primary" @click="query('Mathematics')">{{ $t('message.math') }}</el-button>
+            <el-button type="primary" @click="query('Biology')">{{ $t('message.bio') }}</el-button>
+            <el-button type="primary" @click="query('Chemistry')">{{ $t('message.chem') }}</el-button>
+            <el-button type="primary" @click="query('Physics')">{{ $t('message.physics') }}</el-button>
+        </div>
+        <el-form :model="queryForm" size="large" class="query">
+            <el-form-item label="" class="query-input">
+                <el-input v-model="queryForm.examName" :placeholder="$t('message.searchbar')" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="query">
-                    <Iconfont icon="icon-search" color="white">&nbsp;查询</Iconfont>
+                <el-button type="primary" @click="query()">
+                    <Iconfont icon="icon-search" color="white">&nbsp;{{ $t('message.search') }}</Iconfont>
                 </el-button>
             </el-form-item>
         </el-form>
@@ -15,39 +23,19 @@
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
-                    {   name: `${myExam.state === 3 ? '查阅试卷' : '进入考试'}`, 
+                    {   name: `${myExam.state === 3 ? $t('message.review') : $t('message.startpaper')}`, 
                         icon: `${myExam.state === 3 ? 'icon-search' : 'icon-peixunkaoshi'}`, 
                         event: () => examIn(myExam)
                     },
                     ]" 
                 >
-                <template #tag>
-                    <CountDown v-if="myExam.state === 1 && myExam.markState === 1" :expireTime="dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()" preTxt="距考试："></CountDown>
-                    <template v-else>
-                        <el-tag size="small">{{ dictStore.getValue("EXAM_STATE", myExam.state) }}</el-tag>
-                        &nbsp;<el-tag type="success" size="small">{{ dictStore.getValue("MARK_STATE", myExam.markState) }}</el-tag>
-                    </template>
-                </template>
                 <template #title>
                     {{ myExam.examName }}
                 </template>
                 <template #content>
-                    <div style="margin-bottom: 10px;text-align: center;">
-                        考试时间：{{ myExam.examStartTime }}（{{ Math.ceil((dayjs(myExam.examEndTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime() 
-                                        - dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime()) / (60 * 1000)) + '分钟' }}）
-                    </div>
-                    <el-row>
+                    <el-row justify="center">
                         <el-col :span="8">
-                            答题：{{ myExam.state === 3 
-                                    ? Math.ceil((dayjs(myExam.answerEndTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime() 
-                                        - dayjs(myExam.answerStartTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime()) / (60 * 1000)) + '分钟'
-                                    : '-' }}
-                        </el-col>
-                        <el-col :span="8">
-                            分数：{{ myExam.totalScore || '-' }} / {{ myExam.examTotalScore }}
-                        </el-col>
-                        <el-col :span="8">
-                            排名：{{ myExam.no || '-' }} / {{ myExam.userNum || '-' }}
+                            {{ $t('message.score') }}：{{ myExam.totalScore || '-' }} / {{ myExam.examTotalScore }}
                         </el-col>
                     </el-row>
                 </template>
@@ -64,6 +52,7 @@
             @current-change="query"
             @prev-click="query"
             @next-click="query"
+            style="font-family: Poppins"
         />
     </template>
     <RouterView v-else></RouterView>
@@ -154,10 +143,13 @@ async function examIn(myExam: any) {
 }
 </style>
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .list {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    font-family: Poppins;
     :deep(.grid-content) {
         width: 100%;
         .el-col {

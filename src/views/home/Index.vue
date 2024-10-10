@@ -42,28 +42,31 @@
             </el-card>
         </div>
         <div class="button-container">
-
-            <el-button type="primary" @click="query(false)">All</el-button>
-            <el-button type="primary" @click="query('Sejarah')">Sejarah</el-button>
-            <el-button type="primary" @click="query('Maths')">Maths</el-button>
-            <el-button type="primary" @click="query('Biology')">Biology</el-button>
+            <el-button type="primary" @click="query(false)">{{ $t('message.all') }}</el-button>
+            <el-button type="primary" @click="query('Sejarah')">{{ $t('message.sejarah') }}</el-button>
+            <el-button type="primary" @click="query('Mathematics')">{{ $t('message.math') }}</el-button>
+            <el-button type="primary" @click="query('Biology')">{{ $t('message.bio') }}</el-button>
+            <el-button type="primary" @click="query('Chemistry')">{{ $t('message.chem') }}</el-button>
+            <el-button type="primary" @click="query('Physics')">{{ $t('message.physics') }}</el-button>
         </div>
-        <el-form :inline="true" :model="queryForm" size="large" class="query">
-            <el-form-item label="">
-                <el-input v-model="queryForm.examName" placeholder="请输入考试名称" />
+        <el-form :model="queryForm" size="large" class="query">
+            <el-form-item label="" class="query-input">
+                <el-input v-model="queryForm.examName" :placeholder="$t('message.searchbar')" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="query()">
-                    <Iconfont icon="icon-search" color="white">&nbsp;查询</Iconfont>
+                    <Iconfont icon="icon-search" color="white">&nbsp;{{ $t('message.search') }}</Iconfont>
                 </el-button>
             </el-form-item>
         </el-form>
         <div class="list">
-            <Gridadd v-if="listpage.list.length === 0" name="暂无考试" icon="icon-dongjie"/>
+            <div class="no-results" v-if="listpage.list.length === 0">
+                No results.
+            </div>
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
-                    {   name: 'Start New Paper', 
+                    {   name: 'Start Exam', 
                         icon: 'icon-peixunkaoshi', 
                         event: () => examIn(myExam)
                     },
@@ -103,6 +106,19 @@
             </Griddata>
         </div>
     </div>
+    <el-pagination 
+        class="pagination"
+        v-model:current-page="listpage.curPage"
+        v-model:page-size="listpage.pageSize" 
+        :total="listpage.total" 
+        background
+        layout="prev, pager, next" 
+        :hide-on-single-page="true" 
+        @size-change="query"
+        @current-change="query"
+        @prev-click="query"
+        @next-click="query"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -290,11 +306,19 @@ function bulletinShow(bulletin: any) {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.pagination{
+    margin-top: -70px;
+}
+
 .home-content {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    font-family: 'Poppins';
 
     :deep(.el-card) {
         margin-bottom: 15px;
@@ -327,10 +351,10 @@ function bulletinShow(bulletin: any) {
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding-right: 15px;
 
         .home-left-top {
             overflow: initial;
+            width: 100%;
             .home-left-top-content {
                 display: flex;
 
@@ -526,18 +550,20 @@ function bulletinShow(bulletin: any) {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 0px;
+    margin-bottom: 15px;
 }
 
 button {
     width: 100%;
-    margin: 5px;
+    margin: 0px;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     background-color: #564fcb;
     transition: background-color 0.2s;
+    font-family: 'Poppins';
 }
   
 button:active {
@@ -551,13 +577,42 @@ button:active {
 .list {
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    width: 100%;
+    margin: 0;
+    font-family: 'Poppins';
     :deep(.grid-content) {
         width: 100%;
+        display: flex;
         .el-col {
+            flex: 1;
             text-align: center;
         }
     }
+}
+
+.query {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+
+    .query-input {
+        flex: 1; 
+        margin-right: 10px;
+    }
+
+    .query-button {
+        flex-shrink: 0;
+        width: auto;
+    }
+}
+
+.no-results {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
 }
   
 </style>

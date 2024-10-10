@@ -1,10 +1,8 @@
 <template>
     <div class="header">
         <div class="header-top">
-            <el-image :src="ent.logoUrl" :fit="'contain'" class="header-top-logo">
-                <template #error>logo</template>
-            </el-image>
-            <span class="header-top-orgname">{{ ent.name }}</span>
+            <img src="@/assets/images/Aceterus_logo.png" alt="logo" height="40" style="margin-left:30px">
+            <span class="header-top-orgname"></span>
             <el-menu default-active="$route.path" mode="horizontal" :router="true" class="header-top-menu">
                 <el-menu-item index="/home">{{ $t('message.mockexam') }}</el-menu-item>
                 <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
@@ -49,7 +47,7 @@
         </div>
         <el-divider />
     </div>
-    <el-drawer :title="$t('message.changepwd')" v-model="form.show" :size="550" @close="form.oldPwd = ''; form.newPwd = '';">
+    <el-drawer :title="$t('message.changepwd')" style="font-family: Poppins" v-model="form.show" :size="550" @close="form.oldPwd = ''; form.newPwd = '';">
         <el-form ref="formRef" :model="form" :rules="formRules" label-width="100" size="large">
             <el-form-item prop="oldPwd">
                 <el-input v-model.trim="form.oldPwd" type="password"  :placeholder="$t('message.oldpwd')"/>
@@ -158,16 +156,20 @@ async function pwdUpdate() {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .header {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: white;
+    font-family: 'Poppins';
 
     .header-top {
         width: 1200px;
-        height: 45px;
+        height: 60px;
         display: flex;
+        align-items: center;
 
         .header-top-logo {
             height: 45px;
@@ -175,7 +177,7 @@ async function pwdUpdate() {
         }
 
         .header-top-orgname {
-            padding: 0px 100px 0px 10px;
+            padding: 0px 40px 0px 10px;
             font-weight: bold;
             line-height: 45px;
         }
