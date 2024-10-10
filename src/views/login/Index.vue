@@ -13,6 +13,9 @@
             <el-form-item>
                 <el-button type="primary" @click="login">{{ $t('message.login') }}</el-button>
             </el-form-item>
+            <div class="login-links">
+                <router-link to="/forgot-password">{{ $t('message.forgotpwd') }}</router-link>
+            </div>
         </el-form>
     </div>
 </template>
@@ -126,6 +129,13 @@ async function login() {
         .el-button {
             width: 100%;
             height: 45px;
+        }
+
+        .login-links {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
         }
     }
 }

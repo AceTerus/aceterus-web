@@ -25,6 +25,10 @@
       "exit": "返回",
       "timeleft": "距结束：",
       "questions": "答题卡",
-      "score": "得分"
+      "score": "得分",
+      "forgotpwd": "Forgot password?",
+      "noacc": "Don't have an account? Register here",
+      "hvacc": "Already have an account? Login here",
+      "verifyacc": "Verify your account"
     }
 }

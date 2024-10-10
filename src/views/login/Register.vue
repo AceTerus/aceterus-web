@@ -19,6 +19,9 @@
             <el-form-item>
                 <el-button type="primary" @click="register">{{ $t('message.reg') }}</el-button>
             </el-form-item>
+            <div class="reg-links">
+                <router-link to="/login">{{ $t('message.hvacc') }}</router-link>
+            </div>
         </el-form>
     </div>
 </template>
@@ -137,6 +140,13 @@ async function register() {
         .el-button {
             width: 100%;
             height: 45px;
+        }
+
+        .reg-links {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
         }
     }
 }
