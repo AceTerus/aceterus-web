@@ -38,8 +38,9 @@
                 <!--     <input id="{{ questionType.name }}" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">{{ questionType.name }} -->
                 <!-- </label> -->
                 <label v-for="questionType in listpage.list" :key="questionType.name">
-                    <input :id="questionType.id" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">
-                    {{ questionType.name }}
+                    <input :id="questionType.id" :data-questionnum="questionType.questionNum" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">   
+                    <span class="questionName">{{ questionType.name }}</span>
+                    <span class="questionNum">{{ questionType.questionNum }}</span>
                 </label>
             </div>
             <el-button type="primary" @click="toExer">Start Practice</el-button>
@@ -120,30 +121,22 @@ async function toExer() {
     const checkboxes = document.querySelectorAll('.subitem-checkbox');
     
         var checkedIds = [];
+        let ttlq = 0;
 
     // Loop through all checkboxes and check if they're checked
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 checkedIds.push(checkbox.id);  // Add the id of the checked checkbox
+                ttlq += checkbox.getAttribute("data-questionnum");
             }
         });
-        // const intList = [1, 2, 3, 4, 5];
         checkedIds.sort();
+        
         const encodedString = checkedIds.join('&');  // "1,2,3,4,5"
 
+    if(checkedIds.length > 0 && ttlq > 0){
         router.push(`/myExer/paper/${ encodedString }`)
-        // let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
-        // let exerStartTim = dayjs(exer.startTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        // if (exerStartTim.getTime() > curTime.getTime()) {
-        //     ElMessage.error('练习未开始，请等待...')
-        //     return
-        // }
-
-        // let exerEndTime = dayjs(exer.endTime, 'YYYY-MM-DD HH:mm:ss').toDate()
-        // if (curTime.getTime() > exerEndTime.getTime()) {
-        //     ElMessage.error('练习已结束...')
-        //     return
-        // }
+    }
 
 }
 
@@ -282,5 +275,6 @@ label {
     flex-wrap: wrap;
     align-content: flex-start;
 }
+
 </style>
   
