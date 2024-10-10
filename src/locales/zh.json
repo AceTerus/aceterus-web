@@ -29,6 +29,14 @@
       "forgotpwd": "Forgot password?",
       "noacc": "Don't have an account? Register here",
       "hvacc": "Already have an account? Login here",
-      "verifyacc": "Verify your account"
+      "verifyacc": "Verify your account",
+      "all": "All",
+      "sejarah": "Sejarah",
+      "math": "Mathematics",
+      "bio": "Biology",
+      "chem": "Chemistry",
+      "physics": "Physics",
+      "search": "查询",
+      "searchbar": "请输入考试名称"
     }
 }
