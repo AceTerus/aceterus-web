@@ -33,22 +33,9 @@
                     {{ myExam.examName }}
                 </template>
                 <template #content>
-                    <div style="margin-bottom: 10px;text-align: center;">
-                        考试时间：{{ myExam.examStartTime }}（{{ Math.ceil((dayjs(myExam.examEndTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime() 
-                                        - dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime()) / (60 * 1000)) + '分钟' }}）
-                    </div>
-                    <el-row>
+                    <el-row justify="center">
                         <el-col :span="8">
-                            答题：{{ myExam.state === 3 
-                                    ? Math.ceil((dayjs(myExam.answerEndTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime() 
-                                        - dayjs(myExam.answerStartTime, 'YYYY-MM-DD HH:mm:ss').toDate().getTime()) / (60 * 1000)) + '分钟'
-                                    : '-' }}
-                        </el-col>
-                        <el-col :span="8">
-                            分数：{{ myExam.totalScore || '-' }} / {{ myExam.examTotalScore }}
-                        </el-col>
-                        <el-col :span="8">
-                            排名：{{ myExam.no || '-' }} / {{ myExam.userNum || '-' }}
+                            {{ $t('message.score') }}：{{ myExam.totalScore || '-' }} / {{ myExam.examTotalScore }}
                         </el-col>
                     </el-row>
                 </template>
