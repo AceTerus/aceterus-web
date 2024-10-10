@@ -1,8 +1,8 @@
 <template>
     <div class="register">
         <el-form ref="formRef" :model="form" :rules="formRules" class="register-form" size="large">
-            <div class="register-form-title">
-                欢迎登录
+            <div class="register-form-title" style="text-align: center">
+                <img src="@/assets/images/Aceterus_logo.png" alt="logo" width="100">
             </div>
             <el-form-item label="" prop="username">
                 <el-input v-model.trim="form.username" :placeholder="$t('message.username')" />
@@ -113,11 +113,14 @@ async function register() {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .register {
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    font-family: 'Poppins';
 
     .register-form {
         position: relative;
