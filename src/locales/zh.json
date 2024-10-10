@@ -37,6 +37,7 @@
       "chem": "Chemistry",
       "physics": "Physics",
       "search": "查询",
-      "searchbar": "请输入考试名称"
+      "searchbar": "请输入考试名称",
+      "viewans": "标准答案"
     }
 }

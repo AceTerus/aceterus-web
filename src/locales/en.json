@@ -37,6 +37,7 @@
       "chem": "Chemistry",
       "physics": "Physics",
       "search": "Search",
-      "searchbar": "Search for exam papers"
+      "searchbar": "Search for exam papers",
+      "viewans": "View Answer"
     }
 }

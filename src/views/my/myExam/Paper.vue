@@ -5,13 +5,13 @@
             <el-card shadow="never" class="paper-left-top">
                 <!-- <el-avatar size="large"/> -->
                 <span class="paper-left-top-username">
-                    {{ user.name }} / {{ user.orgName }}
+                    {{ user.name }}
                 </span>
                 <div class="paper-left-top-statis">
                     <div>
                         <Iconfont icon="icon-jiangbei" :size="20" color="#F6961E;" :width="30" :height="30" :radius="5"
                             background-color="#FDF3E7" />
-                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore / myExam.examTotalScore : '-' }}</span>
+                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore + '/' + myExam.examTotalScore : '-' }}</span>
                         <span class="paper-left-top-statis-txt">{{ $t('message.score') }}</span>
                     </div>
                     <div>
@@ -81,7 +81,7 @@
                             v-if="myExam.state === 3 || (myExam.state === 1 && myExam.markState === 3)"><!-- 已交卷或（未考试已阅卷） -->
                             <el-tooltip placement="top" effect="light" :content="answerShow(examQuestion) || '稍后查看答案'"
                                 popper-class="popper-class" raw-content>
-                                <el-button type="success" size="small">标准答案</el-button>
+                                <el-button type="success" size="small">{{ $t('message.viewans') }}</el-button>
                             </el-tooltip>
                         </template>
                     </Question>
@@ -144,7 +144,7 @@ const loadingSecond = ref(6)// 倒计时秒数
 onMounted(async () => {
     // 隐藏页头信息（模拟全屏）
     (document.getElementsByClassName('el-header')[0] as HTMLElement).style.display = 'none'
-
+    
     // 获取机构信息
     let { data: { data: data2 } } = await http.post("user/get", {})
     user.name = data2.name
@@ -177,6 +177,7 @@ onMounted(async () => {
     myExam.answerState = data.answerState
     myExam.no = data.no
     myExam.userNum = data.userNum
+    myExam.examTotalScore = data.examTotalScore
 
     const elements = [
       ...document.getElementsByClassName("question-title-txt"),

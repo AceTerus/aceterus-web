@@ -1,5 +1,5 @@
 <template>
-    <div class="grid">
+    <div class="grid" @mousedown="$emit('callback', menu)">
         <div class="grid-tag">
             <slot name="tag"></slot>
         </div>
@@ -8,7 +8,7 @@
         </div>
         <div class="grid-content">
             <slot name="content">
-                <div>内容</div>
+                <div></div>
             </slot>
         </div>
         <div class="grid-btn">
@@ -55,8 +55,10 @@ defineProps<{
     padding: 30px 30px 20px 30px;
     background-color: white;
     width: 380px;
-    height: 200px;
+    height: 175px;
     position: relative;
+    cursor: pointer;
+
     .grid-tag {
         position: absolute;
         right: 20px;

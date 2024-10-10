@@ -18,7 +18,7 @@
             v-if="errShow" 
             :class="`iconfont ${score === userScore ? 'icon-duigoux' : userScore === 0 ? 'icon-cuo' : 'icon-bandui'}`" 
             :style="`color: var(${score === userScore ? '--el-color-success' : '--el-color-error'});`"
-            >{{ userScore }}分
+            >
         </span>
     </div>
 </template>

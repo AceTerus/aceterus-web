@@ -106,6 +106,19 @@
             </Griddata>
         </div>
     </div>
+    <el-pagination 
+        class="pagination"
+        v-model:current-page="listpage.curPage"
+        v-model:page-size="listpage.pageSize" 
+        :total="listpage.total" 
+        background
+        layout="prev, pager, next" 
+        :hide-on-single-page="true" 
+        @size-change="query"
+        @current-change="query"
+        @prev-click="query"
+        @next-click="query"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -293,11 +306,16 @@ function bulletinShow(bulletin: any) {
 </script>
 
 <style lang="scss" scoped>
+.pagination{
+    margin-top: -70px;
+}
+
 .home-content {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 
     :deep(.el-card) {
         margin-bottom: 15px;

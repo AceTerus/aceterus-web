@@ -1,12 +1,20 @@
 <template>
     <template v-if="$route.path === '/myExam'">
-        <el-form :inline="true" :model="queryForm" size="large" class="query">
-            <el-form-item label="">
-                <el-input v-model="queryForm.examName" placeholder="请输入考试名称" />
+        <div class="button-container">
+            <el-button type="primary" @click="query(false)">{{ $t('message.all') }}</el-button>
+            <el-button type="primary" @click="query('Sejarah')">{{ $t('message.sejarah') }}</el-button>
+            <el-button type="primary" @click="query('Mathematics')">{{ $t('message.math') }}</el-button>
+            <el-button type="primary" @click="query('Biology')">{{ $t('message.bio') }}</el-button>
+            <el-button type="primary" @click="query('Chemistry')">{{ $t('message.chem') }}</el-button>
+            <el-button type="primary" @click="query('Physics')">{{ $t('message.physics') }}</el-button>
+        </div>
+        <el-form :model="queryForm" size="large" class="query">
+            <el-form-item label="" class="query-input">
+                <el-input v-model="queryForm.examName" :placeholder="$t('message.searchbar')" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="query">
-                    <Iconfont icon="icon-search" color="white">&nbsp;查询</Iconfont>
+                <el-button type="primary" @click="query()">
+                    <Iconfont icon="icon-search" color="white">&nbsp;{{ $t('message.search') }}</Iconfont>
                 </el-button>
             </el-form-item>
         </el-form>
@@ -21,13 +29,6 @@
                     },
                     ]" 
                 >
-                <template #tag>
-                    <CountDown v-if="myExam.state === 1 && myExam.markState === 1" :expireTime="dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()" preTxt="距考试："></CountDown>
-                    <template v-else>
-                        <el-tag size="small">{{ dictStore.getValue("EXAM_STATE", myExam.state) }}</el-tag>
-                        &nbsp;<el-tag type="success" size="small">{{ dictStore.getValue("MARK_STATE", myExam.markState) }}</el-tag>
-                    </template>
-                </template>
                 <template #title>
                     {{ myExam.examName }}
                 </template>
