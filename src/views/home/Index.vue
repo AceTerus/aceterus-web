@@ -212,12 +212,22 @@ async function query(searchterm: any) {
     listpage.list = data.list.map((myExam : any) => {
         return myExam
     })
+
     listpage.total = data.total
 }
 
 // 考试进入
 async function examIn(myExam: any) {
-    if (myExam.state !== 3) {
+    if (myExam.state !== 3 && userStore.id && userStore.type === 1) {
+        const { data: { data: data4 } } = await http.post('exam/addUser', {
+            examId: myExam.id,
+        })
+        router.push(`/myExam/paper/${myExam.id}`)
+    } else {
+        router.push(`/login`)
+    }
+
+        // 如果是用户登录
         // let { data: { data } } = await http.post("login/sysTime", {  })
         // let curTime = dayjs(data, 'YYYY-MM-DD HH:mm:ss').toDate()
         // let examStartTim = dayjs(myExam.examStartTime, 'YYYY-MM-DD HH:mm:ss').toDate()
@@ -225,12 +235,7 @@ async function examIn(myExam: any) {
         //     ElMessage.error('考试未开始，请等待...')
         //     return
         // }
-        const { data: { data: data4 } } = await http.post('exam/addUser', {
-            examId: myExam.id,
-        })
-        router.push(`/myExam/paper/${myExam.id}`)
 
-    }
 
     // router.push(`/myExam/paper/${myExam.examId}`)
     // if (screenfull.isEnabled) {
@@ -245,12 +250,14 @@ async function examIn(myExam: any) {
 
 // 组件挂载完成后，执行如下方法
 onMounted(async () => {
-    if (!userStore.id) {
-        router.push('/login')
-    }
+    // if (!userStore.id) {
+    //     router.push('/login')
+    // }
 
     // 任务查询
-    if (userStore.type === 1) {// 如果是用户登录
+    if (userStore.id && userStore.type === 1) {// 如果是用户登录
+
+        // console.log(userStore.type)
         let { data: { data } } = await http.post("report/user/home", {  })// 首页统计
         statis.examNum = data.examNum
         statis.exerNum = data.exerNum
@@ -265,17 +272,17 @@ onMounted(async () => {
     }
 
     // 公告查询
-    let { data: { code, data: data2 } } = await http.post('bulletin/listpage', {
-        notice: true,
-        curPage: 1,
-        pageSize: 10,
-    })
+    // let { data: { data: data2 } } = await http.post('bulletin/listpage', {
+    //     notice: true,
+    //     curPage: 1,
+    //     pageSize: 10,
+    // })
 
-    bulletinListpage.list = data2.list.map((bulletin: any) => {
-        bulletin.content = bulletin.content.replaceAll('\n', '<br/>')
-        return bulletin
-    })
-    bulletinListpage.total = data2.total
+    // bulletinListpage.list = data2.list.map((bulletin: any) => {
+    //     bulletin.content = bulletin.content.replaceAll('\n', '<br/>')
+    //     return bulletin
+    // })
+    // bulletinListpage.total = data2.total
 
     // 自定义信息查询
     // let { data: { data:data3 } } = await http.post('login/custom', { })
