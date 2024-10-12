@@ -112,10 +112,10 @@
                 background
                 layout="prev, pager, next" 
                 :hide-on-single-page="true" 
-                @size-change="query"
-                @current-change="query"
-                @prev-click="query"
-                @next-click="query"
+                @size-change="query2"
+                @current-change="query2"
+                @prev-click="query2"
+                @next-click="query2"
             />
         </div>
     </div>
@@ -176,6 +176,32 @@ const listpage = reactive({// 分页列表
     total: 0,
     list: [] as any[],
 })
+
+// 组件挂载完成后，执行如下方法
+onMounted(() => {
+    query2()
+})
+
+// 如果是跳转到列表页，重新查询
+watch(() => route.path, (n, o) => {
+    if (n === '/') {
+        query2()
+    }
+})
+async function query2() {
+    const { data: { code, data } } = await http.post('exam/listpage', {
+        name: queryForm.name,
+        curPage: listpage.curPage,
+        pageSize: listpage.pageSize,
+    })
+
+    if (code !== 200) {
+        return
+    }
+
+    listpage.list = data.list
+    listpage.total = data.total
+}
 
 function daysUntil(dateString) {
     const targetDate = new Date(dateString);
