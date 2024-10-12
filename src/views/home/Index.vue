@@ -61,7 +61,7 @@
         </el-form>
         <div class="list">
             <div class="no-results" v-if="listpage.list.length === 0">
-                No results.
+                {{ $t('message.noresults') }}
             </div>
             <Griddata 
                 v-for="myExam in listpage.list" 
@@ -368,7 +368,6 @@ function bulletinShow(bulletin: any) {
     height: 100%;
     display: flex;
     flex-direction: column;
-    height: 100vh;
     font-family: 'Poppins';
 
     :deep(.el-card) {

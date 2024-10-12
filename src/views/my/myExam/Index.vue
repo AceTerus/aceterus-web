@@ -19,7 +19,9 @@
             </el-form-item>
         </el-form>
         <div class="list">
-            <Gridadd v-if="listpage.list.length === 0" name="暂无考试" icon="icon-dongjie"/>
+            <div class="no-results" v-if="listpage.list.length === 0">
+                {{ $t('message.noresults') }}
+            </div>
             <Griddata 
                 v-for="myExam in listpage.list" 
                 :menu="[
@@ -40,20 +42,20 @@
                     </el-row>
                 </template>
             </Griddata>
+            <el-pagination 
+                style="width:100%"
+                v-model:current-page="listpage.curPage"
+                v-model:page-size="listpage.pageSize" 
+                :total="listpage.total" 
+                background
+                layout="prev, pager, next" 
+                :hide-on-single-page="true" 
+                @size-change="query"
+                @current-change="query"
+                @prev-click="query"
+                @next-click="query"
+            />
         </div>
-        <el-pagination 
-            v-model:current-page="listpage.curPage"
-            v-model:page-size="listpage.pageSize" 
-            :total="listpage.total" 
-            background
-            layout="prev, pager, next" 
-            :hide-on-single-page="true" 
-            @size-change="query"
-            @current-change="query"
-            @prev-click="query"
-            @next-click="query"
-            style="font-family: Poppins"
-        />
     </template>
     <RouterView v-else></RouterView>
 </template>
@@ -142,7 +144,7 @@ async function examIn(myExam: any) {
     display: initial;
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .list {
@@ -157,5 +159,50 @@ async function examIn(myExam: any) {
         }
     }
 }
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: 'Poppins';
+}
+
+.query {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+
+    .query-input {
+        flex: 1; 
+        margin-right: 10px;
+    }
+
+    .query-button {
+        flex-shrink: 0;
+        width: auto;
+    }
+}
+
+.no-results {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+
 </style>
   
