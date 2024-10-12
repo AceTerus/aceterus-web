@@ -40,6 +40,10 @@
       "searchbar": "请输入考试名称",
       "viewans": "标准答案",
       "review": "查阅试卷",
-      "startpaper": "进入考试"
+      "startpaper": "进入考试",
+      "paperscompleted": "参与考试（场）",
+      "spmtutur": "days to SPM Bertutur",
+      "spmamali": "days to SPM Amali",
+      "spmtulis": "days to SPM Bertulis"
     }
 }

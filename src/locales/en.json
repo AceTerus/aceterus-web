@@ -40,6 +40,10 @@
       "searchbar": "Search for exam papers",
       "viewans": "View Answer",
       "review": "Review",
-      "startpaper": "Start Paper"
+      "startpaper": "Start Paper",
+      "paperscompleted": "papers completed",
+      "spmtutur": "days to SPM Bertutur",
+      "spmamali": "days to SPM Amali",
+      "spmtulis": "days to SPM Bertulis"
     }
 }

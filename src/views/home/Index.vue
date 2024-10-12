@@ -2,40 +2,40 @@
     <div class="home-content">
         <div class="home-left">
             <el-card class="home-left-top" shadow="never">
-                <template #header>
-                    <span>考试概览</span>
-                </template>
+                <!--<template #header>-->
+                    <!--<span>考试概览</span>-->
+                <!--</template>-->
                 <div class="home-left-top-content">
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item" @click="$router.push('/myExam')">
-                        <Iconfont icon="icon-diannao" :size="24" color="#09c8bd;" :width="48" :height="48"
-                            background-color="#e5faf8" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.examNum }}</div>
-                            <div class="home-left-top-content-item-desc">参与考试（场）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item" @click="$router.push('/myExer')">
-                        <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
-                            background-color="#fff4e7" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ statis.exerNum }}</div>
-                            <div class="home-left-top-content-item-desc">参与练习（场）</div>
-                        </div>
-                    </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item" @click="$router.push('/myExam')">
+                    <div v-if="userStore.type === 1" class="home-left-top-content-item" style="cursor: pointer" @click="$router.push('/myExam')">
                         <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
                             background-color="#e5f4fd" />
                         <div>
-                            <div class="home-left-top-content-item-num">{{ statis.passExamNum }}</div>
-                            <div class="home-left-top-content-item-desc">及格次数（次）</div>
+                            <div class="home-left-top-content-item-num" style="cursor: pointer">{{ statis.examNum }}</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.paperscompleted') }}</div>
                         </div>
                     </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item" @click="$router.push('/myExam')">
+                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
+                        <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
+                            background-color="#fff4e7" />
+                        <div>
+                            <div class="home-left-top-content-item-num">{{ countdownspmamali }}</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.spmamali') }}</div>
+                        </div>
+                    </div>
+                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
+                        <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
+                            background-color="#e5f4fd" />
+                        <div>
+                            <div class="home-left-top-content-item-num">{{ countdownspmtutur }}</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.spmtutur') }}</div>
+                        </div>
+                    </div>
+                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
                         <Iconfont icon="icon-ai-users" :size="29" color="#eb5b5b;" :width="48" :height="48"
                             background-color="#fdeeee" />
                         <div>
-                            <div class="home-left-top-content-item-num">{{ statis.topRank }}</div>
-                            <div class="home-left-top-content-item-desc">最高排名（名）</div>
+                            <div class="home-left-top-content-item-num">{{ countdownspmtulis }}</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.spmtulis') }}</div>
                         </div>
                     </div>
                 </div>
@@ -104,21 +104,21 @@
                     </el-row> -->
                 </template>
             </Griddata>
+            <el-pagination 
+                style="width: 100%"
+                v-model:current-page="listpage.curPage"
+                v-model:page-size="listpage.pageSize" 
+                :total="listpage.total" 
+                background
+                layout="prev, pager, next" 
+                :hide-on-single-page="true" 
+                @size-change="query"
+                @current-change="query"
+                @prev-click="query"
+                @next-click="query"
+            />
         </div>
     </div>
-    <el-pagination 
-        class="pagination"
-        v-model:current-page="listpage.curPage"
-        v-model:page-size="listpage.pageSize" 
-        :total="listpage.total" 
-        background
-        layout="prev, pager, next" 
-        :hide-on-single-page="true" 
-        @size-change="query"
-        @current-change="query"
-        @prev-click="query"
-        @next-click="query"
-    />
 </template>
 
 <script lang="ts" setup>
@@ -176,6 +176,24 @@ const listpage = reactive({// 分页列表
     total: 0,
     list: [] as any[],
 })
+
+function daysUntil(dateString) {
+    const targetDate = new Date(dateString);
+    const currentDate = new Date();
+
+    targetDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+    
+    const difference = targetDate - currentDate;
+
+    const daysRemaining = Math.floor(difference / (1000 * 60 * 60 * 24));
+    
+    return daysRemaining;
+}
+
+const countdownspmamali = daysUntil("2024-12-02");
+const countdownspmtutur = daysUntil("2024-12-02");
+const countdownspmtulis = daysUntil("2025-01-02");
 
 // 组件挂载完成后，执行如下方法
 // onMounted(() => {
@@ -369,7 +387,6 @@ function bulletinShow(bulletin: any) {
                     flex: 1;
                     display: flex;
                     justify-content: center;
-                    cursor: pointer;
 
                     .home-left-top-content-item-num {
                         font-size: 28px;
