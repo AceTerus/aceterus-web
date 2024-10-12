@@ -10,7 +10,7 @@
         </div>
         <el-form :model="queryForm" size="large" class="query">
             <el-form-item label="" class="query-input">
-                <el-input v-model="queryForm.examName" :placeholder="$t('message.searchbar')" />
+                <el-input v-model="queryForm.examName" :placeholder="$t('message.searchbar')" @keydown.enter.prevent="query()"/>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="query()">
