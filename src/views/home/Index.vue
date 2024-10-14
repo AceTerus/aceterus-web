@@ -14,7 +14,15 @@
                             <div class="home-left-top-content-item-desc">{{ $t('message.paperscompleted') }}</div>
                         </div>
                     </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
+                    <div v-if="userStore.type === 0" class="home-left-top-content-item" style="cursor: pointer" @click="$router.push('/myExam')">
+                        <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
+                            background-color="#e5f4fd" />
+                        <div>
+                            <div class="home-left-top-content-item-num" style="cursor: pointer">-</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.paperscompleted') }}</div>
+                        </div>
+                    </div>
+                    <div class="home-left-top-content-item">
                         <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
                             background-color="#fff4e7" />
                         <div>
@@ -22,7 +30,7 @@
                             <div class="home-left-top-content-item-desc">{{ $t('message.spmamali') }}</div>
                         </div>
                     </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
+                    <div class="home-left-top-content-item">
                         <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
                             background-color="#e5f4fd" />
                         <div>
@@ -30,7 +38,7 @@
                             <div class="home-left-top-content-item-desc">{{ $t('message.spmtutur') }}</div>
                         </div>
                     </div>
-                    <div v-if="userStore.type === 1" class="home-left-top-content-item">
+                    <div class="home-left-top-content-item">
                         <Iconfont icon="icon-ai-users" :size="29" color="#eb5b5b;" :width="48" :height="48"
                             background-color="#fdeeee" />
                         <div>
