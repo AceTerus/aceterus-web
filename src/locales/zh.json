@@ -45,6 +45,14 @@
       "spmtutur": "days to SPM Bertutur",
       "spmamali": "days to SPM Amali",
       "spmtulis": "days to SPM Bertulis",
-      "noresults": "No results."
+      "noresults": "No results.",
+      "back": "上一题",
+      "next": "下一题",
+      "min": "分钟",
+      "viewansss": "背题",
+      "nomistakes": "No. of mistakes",
+      "mistakes": "mistakes",
+      "random": "随机",
+      "practicecomplete": "最后一题"
     }
 }

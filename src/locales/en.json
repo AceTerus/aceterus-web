@@ -45,6 +45,14 @@
       "spmtutur": "days to SPM Bertutur",
       "spmamali": "days to SPM Amali",
       "spmtulis": "days to SPM Bertulis",
-      "noresults": "No results."
+      "noresults": "No results.",
+      "back": "Back",
+      "next": "Next",
+      "min": "min",
+      "viewansss": "View Answers",
+      "nomistakes": "No. of mistakes",
+      "mistakes": "mistakes",
+      "random": "Randomise Order",
+      "practicecomplete": "Practice completed!"
     }
 }

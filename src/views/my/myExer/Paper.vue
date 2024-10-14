@@ -5,33 +5,25 @@
             <el-card shadow="never" class="paper-left-top">
                 <!-- <el-avatar size="large"/> -->
                 <span class="paper-left-top-username">
-                    {{ user.name }} / {{ user.orgName }}
+                    {{ user.name }}
                 </span>
                 <div class="paper-left-top-statis">
                     <div>
-                        <Iconfont icon="icon-jiangbei" :size="20" color="#F6961E;" :width="30" :height="30" :radius="5" background-color="#FDF3E7" />
-                        <span class="paper-left-top-statis-value">{{ questionNum }}道</span>
-                        <span class="paper-left-top-statis-txt">试题数量</span>
-                    </div>
-                    <div>
                         <Iconfont icon="icon-approval-fulll" :size="20" color="#05CAC1;" :width="30" :height="30" :radius="5" background-color="#E3F3FF" />
-                        <span class="paper-left-top-statis-value">{{ questionErrNum }}道</span>
-                        <span class="paper-left-top-statis-txt">错误题数</span>
+                        <span class="paper-left-top-statis-value">{{ questionErrNum + ' ' + $t('message.mistakes')}}</span>
+                        <span class="paper-left-top-statis-txt">{{ $t('message.nomistakes') }}</span>
                     </div>
                     <div>
                         <Iconfont icon="icon-shijianxuanzhong" :size="20" color="#F6961E;" :width="30" :height="30" :radius="5" background-color="#FDF3E7" />
-                        <span class="paper-left-top-statis-value">{{ diffMinute }}分钟</span>
-                        <span class="paper-left-top-statis-txt">答题用时</span>
+                        <span class="paper-left-top-statis-value">{{ diffMinute - 1 + ' ' + $t('message.min') }}</span>
+                        <span class="paper-left-top-statis-txt">{{ $t('message.timetaken') }}</span>
                     </div>
                 </div>
-                <div class="paper-left-top-time">
-                    <CountDown :expireTime="exer.endTime as Date" preTxt="距结束：" :remind="300" @end="exerEnd" @remind="exer.color='var(--el-color-danger)'" :color="exer.color"></CountDown>
-                </div>
-                <el-button type="primary" plain @click="$router.go(-1)">返回</el-button>
+                <el-button type="primary" plain @click="$router.go(-1)">{{ $t('message.exit') }}</el-button>
             </el-card>
             <el-card shadow="never" class="paper-left-bottom">
                 <el-divider>
-                    答题卡
+                    {{ $t('message.questions') }}
                 </el-divider>
                 <el-scrollbar height="calc(100vh - 475px)">
                     <template v-for="(questionId, index) in exer.questionIds">
@@ -48,10 +40,10 @@
         <el-card shadow="never" class="paper-right">
             <!-- 选项 -->
             <div class="paper-right-opt">
-                <el-button link size="small" :disabled="curQuestion.index <= 0" @click="next(false)">{{ `<<上一题` }}</el-button>
-                <el-button link size="small" :disabled="curQuestion.index >= exer.questionIds.length - 1" @click="next(true)">{{ `下一题>>` }}</el-button>
-                <el-checkbox v-model="exer.answerShow" label="背题" size="small"></el-checkbox>
-                <el-checkbox v-model="exer.randShow" label="随机" size="small"></el-checkbox>
+                <el-button link size="small" :disabled="curQuestion.index <= 0" @click="next(false)">{{'<< ' + $t(`message.back`) }}</el-button>
+                <el-button link size="small" :disabled="curQuestion.index >= exer.questionIds.length - 1" @click="next(true)">{{ $t('message.next') + ` >>` }}</el-button>
+                <el-checkbox v-model="exer.answerShow" :label="$t('message.viewansss')" size="small"></el-checkbox>
+                <el-checkbox v-model="exer.randShow" :label="$t('message.random')" size="small"></el-checkbox>
                 <el-checkbox v-if="exer.rmkState === 1" v-model="exer.rmkShow" label="评论" size="small"></el-checkbox>
             </div>
             <el-divider />
@@ -78,11 +70,6 @@
                 :user-answer-show="!exer.answerShow"
                 :errShow="!exer.answerShow && curQuestion.question.userScore != null"
                 >
-                <template #bottom-right>
-                    <el-tooltip placement="top" effect="light" :content="answerFormat(curQuestion.question)" popper-class="popper-class">
-                        <el-button type="success" size="small">标准答案</el-button>
-                    </el-tooltip>
-                </template>
             </QuestionVue>
             <!-- 评论 -->
             <div v-if="exer.rmkShow && exer.rmkState === 1" class="paper-right-my-rmk">
@@ -127,6 +114,10 @@ import * as marked from 'marked'
 import markedKatex from 'marked-katex-extension';
 import 'katex/dist/katex.min.css'
 marked.use(markedKatex({}));
+
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 // 定义变量
 const userStore = useUserStore()
@@ -301,7 +292,7 @@ function next(hasNext: boolean) {
     // 数据有效性校验
     if (hasNext) {
         if (curQuestion.index >= exer.questionIds.length - 1) {
-            ElMessage.success('最后一题')
+            ElMessage.success(t('message.practicecomplete'))
             return
         }
     }
@@ -513,9 +504,12 @@ async function rmkLike(exerRmkId: number) {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .paper {
     flex: 1;
     display: flex;
+    font-family: Poppins;
     .paper-left {
         width: 240px;
         display: flex;
@@ -533,7 +527,7 @@ async function rmkLike(exerRmkId: number) {
                 }
                 .paper-left-top-username {
                     margin-bottom: 15px;
-                    font-size: 13px;
+                    font-size: 17px;
                     font-weight: bold;
                     color: var(--el-text-color-regular);
                 }
@@ -552,7 +546,7 @@ async function rmkLike(exerRmkId: number) {
                             text-align: center;
                         }
                         .paper-left-top-statis-txt {
-                            font-size: 12px;
+                            font-size: 10px;
                             font-weight: bold;
                             color: var(--el-text-color-secondary);
                             display: block;
