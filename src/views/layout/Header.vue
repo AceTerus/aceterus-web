@@ -3,27 +3,27 @@
         <div class="header-top">
             <img src="@/assets/images/Aceterus_logo.png" alt="logo" height="40" style="margin-left:30px">
             <span class="header-top-orgname"></span>
-            <el-menu default-active="$route.path" mode="horizontal" :router="true" class="header-top-menu">
+            <el-menu :default-active="$route.path" mode="horizontal" :router="true" class="header-top-menu">
                 <el-menu-item index="/home">{{ $t('message.mockexam') }}</el-menu-item>
-                <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
-                <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exer">练习</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExer">{{ $t('message.twpractice') }}</el-menu-item>
-                <el-menu-item v-if="userStore.type === 1" index="/myExam">{{ $t('message.history') }}</el-menu-item>
-                <el-menu-item v-if="userStore.type === 0 || userStore.type === 2" index="/exam">考试</el-menu-item>
-                <el-menu-item v-if="userStore.type === 3" index="/myMark">阅卷</el-menu-item>
-                <el-sub-menu v-if="userStore.type === 0" index="/user">
+                <el-menu-item index="/myExer">{{ $t('message.twpractice') }}</el-menu-item>
+                <el-menu-item index="/myExam">{{ $t('message.history') }}</el-menu-item>
+                <el-menu-item v-if="userStore.id && userStore.type === 0 || userStore.type === 2" index="/questionType">题库</el-menu-item>
+                <el-menu-item v-if="userStore.id && userStore.type === 0 || userStore.type === 2" index="/exer">练习</el-menu-item>
+                <el-menu-item v-if="userStore.id && userStore.type === 0 || userStore.type === 2" index="/exam">考试</el-menu-item>
+                <el-menu-item v-if="userStore.id && userStore.type === 3" index="/myMark">阅卷</el-menu-item>
+                <el-sub-menu v-if="userStore.id && userStore.type === 0" index="/user">
                     <template #title>用户</template>
                     <el-menu-item index="/org">机构管理</el-menu-item>
                     <el-menu-item index="/user">考试用户</el-menu-item>
                     <el-menu-item index="/subAdmin">子管理员</el-menu-item>
                     <el-menu-item index="/markUser">阅卷用户</el-menu-item>
                 </el-sub-menu>
-                <el-sub-menu v-if="userStore.type === 2" index="/user">
+                <el-sub-menu v-if="userStore.id && userStore.type === 2" index="/user">
                     <template #title>用户</template>
                     <el-menu-item index="/examUser">考试用户</el-menu-item>
                     <el-menu-item index="/markUser">阅卷用户</el-menu-item>
                 </el-sub-menu>
-                <el-sub-menu v-if="userStore.type === 0" index="/sys">
+                <el-sub-menu v-if="userStore.id && userStore.type === 0" index="/sys">
                     <template #title>系统</template>
                     <el-menu-item index="/bulletin">公告管理</el-menu-item>
                     <el-menu-item index="/parm">系统配置</el-menu-item>
@@ -32,7 +32,11 @@
                     <el-menu-item index="/cache">缓存服务</el-menu-item>
                 </el-sub-menu>
             </el-menu>
-            <el-dropdown @command="dropdownCmd" :teleported="false" class="header-top-username">
+            <el-menu class="header-top-username" :router="true">
+                <el-menu-item v-if="!userStore.id" index="/login">{{ $t('message.login') }}</el-menu-item>
+            </el-menu>
+
+            <el-dropdown v-if="userStore.id" @command="dropdownCmd" :teleported="false" class="header-top-username">
                 <span class="el-dropdown-link">
                     {{ userStore.name }}
                     <span class="iconfont icon-arrow-down" style="font-size: 12px;font-weight: bold;color: #409eff;"></span>
@@ -111,13 +115,13 @@ const formRules = reactive<FormRules>({// 密码修改表单校验规则
 // 组件挂载完成后，执行如下方法
 onMounted(async () => {
     // 更新页面标题
-    let { data: { data } } = await http.post('login/ent', {})
+    // let { data: { data } } = await http.post('login/ent', {})
     ent.name = data.name
     document.title = data.name
 
     // 更新页面logo
     let favicon = document.querySelector('link[rel="icon"]') as any;
-    favicon.href = ent.logoUrl;
+    favicon.href = "@/assets/images/Aceterus_logo.png";
 })
 
 // 下拉菜单命令
