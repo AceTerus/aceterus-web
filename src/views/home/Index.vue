@@ -23,23 +23,23 @@
                         </div>
                     </div>
                     <div class="home-left-top-content-item">
-                        <Iconfont icon="icon-shiti" :size="28" color="#fb901b;" :width="48" :height="48"
+                        <Iconfont icon="icon-ask" :size="28" color="#fb901b;" :width="48" :height="48"
                             background-color="#fff4e7" />
-                        <div>
-                            <div class="home-left-top-content-item-num">{{ countdownspmamali }}</div>
-                            <div class="home-left-top-content-item-desc">{{ $t('message.spmamali') }}</div>
-                        </div>
-                    </div>
-                    <div class="home-left-top-content-item">
-                        <Iconfont icon="icon-mark-paper" :size="27" color="#0094e5;" :width="48" :height="48"
-                            background-color="#e5f4fd" />
                         <div>
                             <div class="home-left-top-content-item-num">{{ countdownspmtutur }}</div>
                             <div class="home-left-top-content-item-desc">{{ $t('message.spmtutur') }}</div>
                         </div>
                     </div>
                     <div class="home-left-top-content-item">
-                        <Iconfont icon="icon-ai-users" :size="29" color="#eb5b5b;" :width="48" :height="48"
+                        <Iconfont icon="icon-count-down" :size="27" color="#0094e5;" :width="48" :height="48"
+                            background-color="#e5f4fd" />
+                        <div>
+                            <div class="home-left-top-content-item-num">{{ countdownspmamali }}</div>
+                            <div class="home-left-top-content-item-desc">{{ $t('message.spmamali') }}</div>
+                        </div>
+                    </div>
+                    <div class="home-left-top-content-item">
+                        <Iconfont icon="icon-shiti" :size="29" color="#eb5b5b;" :width="48" :height="48"
                             background-color="#fdeeee" />
                         <div>
                             <div class="home-left-top-content-item-num">{{ countdownspmtulis }}</div>
@@ -225,7 +225,7 @@ function daysUntil(dateString) {
     return daysRemaining;
 }
 
-const countdownspmamali = daysUntil("2024-12-02");
+const countdownspmamali = daysUntil("2024-12-09");
 const countdownspmtutur = daysUntil("2024-12-02");
 const countdownspmtulis = daysUntil("2025-01-02");
 

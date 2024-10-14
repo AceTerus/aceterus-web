@@ -334,9 +334,12 @@ function answerShow(examQuestion: ExamQuestion) {
 
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .paper {
     flex: 1;
     display: flex;
+    font-family: Poppins;
 
     .paper-left {
         width: 240px;
@@ -359,7 +362,7 @@ function answerShow(examQuestion: ExamQuestion) {
 
                 .paper-left-top-username {
                     margin-bottom: 15px;
-                    font-size: 13px;
+                    font-size: 17px;
                     font-weight: bold;
                     color: var(--el-text-color-regular);
                 }
@@ -382,7 +385,7 @@ function answerShow(examQuestion: ExamQuestion) {
                         }
 
                         .paper-left-top-statis-txt {
-                            font-size: 12px;
+                            font-size: 10px;
                             font-weight: bold;
                             color: var(--el-text-color-secondary);
                             display: block;

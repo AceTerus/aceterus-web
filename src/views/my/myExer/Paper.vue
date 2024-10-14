@@ -9,7 +9,7 @@
                 </span>
                 <div class="paper-left-top-statis">
                     <div>
-                        <Iconfont icon="icon-approval-fulll" :size="20" color="#05CAC1;" :width="30" :height="30" :radius="5" background-color="#E3F3FF" />
+                        <Iconfont icon="icon-cuo" :size="20" color="#eb5b5b;" :width="30" :height="30" :radius="5" background-color="#fdeeee" />
                         <span class="paper-left-top-statis-value">{{ questionErrNum + ' ' + $t('message.mistakes')}}</span>
                         <span class="paper-left-top-statis-txt">{{ $t('message.nomistakes') }}</span>
                     </div>

@@ -53,6 +53,7 @@
       "nomistakes": "No. of mistakes",
       "mistakes": "mistakes",
       "random": "Randomise Order",
-      "practicecomplete": "Practice completed!"
+      "practicecomplete": "Practice completed!",
+      "networkerror": "Network Error"
     }
 }

@@ -281,4 +281,66 @@ label {
 }
 
 </style>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    font-family: Poppins;
+    :deep(.grid-content) {
+        width: 100%;
+        .el-col {
+            text-align: center;
+        }
+    }
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: 'Poppins';
+}
+
+.query {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+
+    .query-input {
+        flex: 1; 
+        margin-right: 10px;
+    }
+
+    .query-button {
+        flex-shrink: 0;
+        width: auto;
+    }
+}
+
+.no-results {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+
+</style>
   

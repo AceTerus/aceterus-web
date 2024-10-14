@@ -52,7 +52,7 @@ http.interceptors.response.use(
             ElMessage.error(`请求超时：${error.config.timeout / 1000}秒`)
             console.error(`请求超时：${error.config.timeout / 1000}秒 ${error.config.baseURL}${error.config.url}?${error.config.data}`)
         } else if (error.message === 'Network Error') {// 网络不通，提示错误
-            ElMessage.error('连接服务器失败')
+            ElMessage.error('Network Error')
             console.error(`连接服务器失败：${error.config.baseURL}${error.config.url}?${error.config.data}`)
         } else {
             ElMessage.error(error.message)// 其他错误，提示错误

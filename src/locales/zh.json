@@ -53,6 +53,7 @@
       "nomistakes": "No. of mistakes",
       "mistakes": "mistakes",
       "random": "随机",
-      "practicecomplete": "最后一题"
+      "practicecomplete": "最后一题",
+      "network": "连接服务器失败"
     }
 }
