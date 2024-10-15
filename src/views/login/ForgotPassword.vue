@@ -5,7 +5,7 @@
                 {{ $t('message.forgotpwd') }}
             </div>
             <div class="fp-form-text">
-                insert message later
+                Don't worry! Contact us at admin@aceterus.com with your username and new password to continue your learning journey. Click <router-link to="/login">here</router-link> to  return to login.
             </div>
         </el-form>
     </div>
@@ -51,7 +51,7 @@ const router = useRouter()
         }
 
         .fp-form-text {
-            font-size: 20px;
+            font-size: 15px;
             color: var(--el-text-color-regular);
         }
 

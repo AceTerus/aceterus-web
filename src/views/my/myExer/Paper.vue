@@ -292,13 +292,13 @@ function next(hasNext: boolean) {
     // 数据有效性校验
     if (hasNext) {
         if (curQuestion.index >= exer.questionIds.length - 1) {
-            ElMessage.success(t('message.practicecomplete'))
+   //         ElMessage.success(t('message.practicecomplete'))
             return
         }
     }
     if (!hasNext) {
         if (curQuestion.index < 0) {
-            ElMessage.success('第一题')
+    //        ElMessage.success('第一题')
             return
         }
     }
