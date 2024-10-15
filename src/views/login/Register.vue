@@ -48,14 +48,14 @@ const form = ref({
   cpwd: ''
 });
 
-function logData() {
-  const data = {
-    username: form.value.username,
-    email: form.value.email,
-    password: form.value.pwd
-  };
-  console.log(JSON.stringify(data));
-}
+// function logData() {
+//   const data = {
+//     username: form.value.username,
+//     email: form.value.email,
+//     password: form.value.pwd
+//   };
+//   console.log(JSON.stringify(data));
+// }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -129,6 +129,21 @@ async function register() {
             return
         }
     })
+    let { data: { code, data } } = await http.post("user/register", {
+        loginName: form.value.username,
+        email: form.value.email,
+        pwd: form.value.pwd
+    })
+    // ElMessage({
+    //     message: `Registration successful. Please check your email for verification. `,
+    //     type: 'success',
+    //     showClose: true
+    // })
+
+    if (code !== 200) {
+        console.log(code)
+        return
+    }
 
     router.push("/verify-account")
 }
