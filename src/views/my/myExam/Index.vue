@@ -14,7 +14,8 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="query()">
-                    <Iconfont icon="icon-search" color="white">&nbsp;{{ $t('message.search') }}</Iconfont>
+                    <Iconfont icon="icon-search" color="white">&nbsp;</Iconfont>
+                    {{ $t('message.search') }}
                 </el-button>
             </el-form-item>
         </el-form>
