@@ -103,6 +103,10 @@ import { useRoute } from 'vue-router'
 import { useDictStore } from '@/stores/dict';
 import { useRouter } from 'vue-router'
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 import * as marked from 'marked'
 import markedKatex from 'marked-katex-extension';
 import 'katex/dist/katex.min.css'
@@ -249,7 +253,7 @@ async function examEnd() {
     let { data: { data } } = await http.post("myExam/get", { examId: exam.id })
     if (data.state === 2) {
         loading.value = true
-        loadingText.value = `正在交卷`
+        loadingText.value = t('message.submitans')
         if (loadingSecond.value-- > 0) {
             setTimeout(examEnd, 1000)
             return
@@ -262,8 +266,8 @@ async function examEnd() {
     }
 
     loading.value = false
-    ElMessageBox.alert('考试成功', '提示消息', {
-        confirmButtonText: '确定',
+    ElMessageBox.alert('', t('message.anssubmitted'), {
+        confirmButtonText: t('message.revppr'),
         callback: async (action: Action) => {
             // 获取我的考试信息（相当于考试结束后刷新页面）
             exam.id = parseInt(route.params.examId as string)

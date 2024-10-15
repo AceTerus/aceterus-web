@@ -56,6 +56,9 @@
       "practicecomplete": "Practice completed!",
       "networkerror": "Network Error",
       "emailerr": "Email is invalid",
-      "pwdlength": "Password must be at least 6 characters long"
+      "pwdlength": "Password must be at least 6 characters long",
+      "anssubmitted": "Answers submitted!",
+      "revppr": "Review paper",
+      "submitans": "Submitting answers..."
     }
 }

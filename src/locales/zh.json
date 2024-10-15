@@ -56,6 +56,9 @@
       "practicecomplete": "最后一题",
       "network": "连接服务器失败",
       "emailerr": "Email is invalid",
-      "pwdlength": "Password must be at least 6 characters long"
+      "pwdlength": "Password must be at least 6 characters long",
+      "anssubmitted": "提示消息",
+      "revppr": "确定",
+      "submitans": "正在交卷"
     }
 }
