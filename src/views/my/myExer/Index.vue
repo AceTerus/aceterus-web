@@ -1,36 +1,37 @@
 <template>
     <template v-if="$route.path === '/myExer'">
-            <div class="container" v-for="subject in structuredData" :key="subject.id">
-                <div class="group">
-                    <div class="label-wrapper">
-                        <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                        <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
-                        <label>
-                            <span class="questionName">{{ subject.name }}</span>
-                            <span class="questionNum">{{ subject.totalQuestionNum }}</span>
-                        </label>
-                    </div>
-                    <div class="items" v-if="subject.years.length > 0">
-                        <div class="item" v-for="year in subject.years" :key="year.id">
-                            <div class="label-wrapper">
-                                <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                                <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                                <label>
-                                    <span class="questionName">{{ year.name }}</span>
-                                    <span class="questionNum">{{ year.totalQuestionNum }}</span>
-                                </label>
-                            </div>
-                            <div class="subitems" v-if="year.chapters.length > 0">
-                                <label v-for="chapter in year.chapters" :key="chapter.id">
-                                    <input :id="chapter.id" :data-questionnum="chapter.questionNum" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">
-                                    <span class="chapterId">{{ chapter.chapterId }}</span>
-                                    <span class="questionName">{{ chapter.name }}</span>
-                                    <span class="questionNum">{{ chapter.questionNum }}</span>
-                                </label>
-                            </div>
+        <div class="container" v-for="subject in structuredData" :key="subject.id">
+            <div class="group">
+                <div class="label-wrapper">
+                    <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
+                    <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
+                    <label>
+                        <span class="questionName">{{ subject.name }}</span>
+                        <span class="questionNum" style="color: gray">{{ ' — ' + subject.totalQuestionNum + ' questions' }}</span>
+                    </label>
+                </div>
+                <div class="items" v-if="subject.years.length > 0">
+                    <div class="item" v-for="year in subject.years" :key="year.id">
+                        <div class="label-wrapper">
+                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
+                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
+                            <label>
+                                <span class="questionName">{{ year.name }}</span>
+                                <span class="questionNum" style="color: gray">{{ ' — ' + year.totalQuestionNum + ' questions' }}</span>
+                            </label>
+                        </div>
+                        <div class="subitems" v-if="year.chapters.length > 0">
+                            <label v-for="chapter in year.chapters" :key="chapter.id">
+                                <input :id="chapter.id" :data-questionnum="chapter.questionNum" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">
+                                <span class="chapterId">{{ chapter.chapterId +': ' }}</span>
+                                <span class="questionName">{{ chapter.name }}</span>
+                                <span class="questionNum" style="color: gray">{{ ' — ' + chapter.questionNum + ' questions'}}</span>
+                            </label>
                         </div>
                     </div>
                 </div>
+            </div>
+            <el-button type="primary" @click="toExer">Start Practice</el-button>
         </div>
         <el-pagination 
             v-model:current-page="listpage.curPage"
