@@ -11,7 +11,7 @@
                     <div>
                         <Iconfont icon="icon-jiangbei" :size="20" color="#F6961E;" :width="30" :height="30" :radius="5"
                             background-color="#FDF3E7" />
-                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore + '/' + myExam.examTotalScore : '-' }}</span>
+                        <span class="paper-left-top-statis-value">{{ scoreShow ? myExam.totalScore + '/40' : '-' }}</span>
                         <span class="paper-left-top-statis-txt">{{ $t('message.score') }}</span>
                     </div>
                     <div>
@@ -46,7 +46,7 @@
             </el-card>
         </div>
         <!-- 试卷 -->
-        <el-scrollbar height="calc(100vh - 50px)" class="paper-right">
+        <el-scrollbar height="calc(100vh - 50px)" class="paper-right" style="font-family: Cambria">
             <el-card shadow="never">
                 <!-- 右上角显示打分 -->
                 <div class="paper-right-score" v-if="scoreShow">

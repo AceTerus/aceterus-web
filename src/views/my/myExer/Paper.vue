@@ -37,9 +37,9 @@
             </el-card>
         </div>
         <!-- 试卷 -->
-        <el-card shadow="never" class="paper-right">
+        <el-card shadow="never" class="paper-right" style="font-family: Cambria">
             <!-- 选项 -->
-            <div class="paper-right-opt">
+            <div class="paper-right-opt" style="font-family: Poppins">
                 <el-button link size="small" :disabled="curQuestion.index <= 0" @click="next(false)">{{'<< ' + $t(`message.back`) }}</el-button>
                 <el-button link size="small" :disabled="curQuestion.index >= exer.questionIds.length - 1" @click="next(true)">{{ $t('message.next') + ` >>` }}</el-button>
                 <el-checkbox v-model="exer.answerShow" :label="$t('message.viewansss')" size="small"></el-checkbox>
