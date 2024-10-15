@@ -1,49 +1,36 @@
 <template>
     <template v-if="$route.path === '/myExer'">
-        <div class="container">
-            <div class="group">
-                <div class="label-wrapper">
-                    <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                    <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
-                    <label>Group 1</label>
-                </div>
-                <div class="items">
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 1.1</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 1.1.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 1.1.2</label>
+            <div class="container" v-for="subject in structuredData" :key="subject.id">
+                <div class="group">
+                    <div class="label-wrapper">
+                        <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
+                        <input type="checkbox" class="group-checkbox" @change="handleCheckboxChange">
+                        <label>
+                            <span class="questionName">{{ subject.name }}</span>
+                            <span class="questionNum">{{ subject.totalQuestionNum }}</span>
+                        </label>
+                    </div>
+                    <div class="items" v-if="subject.years.length > 0">
+                        <div class="item" v-for="year in subject.years" :key="year.id">
+                            <div class="label-wrapper">
+                                <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
+                                <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
+                                <label>
+                                    <span class="questionName">{{ year.name }}</span>
+                                    <span class="questionNum">{{ year.totalQuestionNum }}</span>
+                                </label>
+                            </div>
+                            <div class="subitems" v-if="year.chapters.length > 0">
+                                <label v-for="chapter in year.chapters" :key="chapter.id">
+                                    <input :id="chapter.id" :data-questionnum="chapter.questionNum" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">
+                                    <span class="chapterId">{{ chapter.chapterId }}</span>
+                                    <span class="questionName">{{ chapter.name }}</span>
+                                    <span class="questionNum">{{ chapter.questionNum }}</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="label-wrapper">
-                            <span class="toggle-button plus" @click="handleDropdownButtonClick"></span>
-                            <input type="checkbox" class="item-checkbox" @change="handleCheckboxChange">
-                            <label>Item 1.2</label>
-                        </div>
-                        <div class="subitems">
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 1.2.1</label>
-                            <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 1.2.2</label>
-                        </div>
-                    </div>
                 </div>
-            </div>
-            <div class="group">
-                <!-- <label><input type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange"> Subitem 2.1.1</label> -->
-                <!-- <label v-for="questionType in listpage.list"> -->
-                <!--     <input id="{{ questionType.name }}" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">{{ questionType.name }} -->
-                <!-- </label> -->
-                <label v-for="questionType in listpage.list" :key="questionType.name">
-                    <input :id="questionType.id" :data-questionnum="questionType.questionNum" type="checkbox" class="subitem-checkbox" @change="handleCheckboxChange">   
-                    <span class="questionName">{{ questionType.name }}</span>
-                    <span class="questionNum">{{ questionType.questionNum }}</span>
-                </label>
-            </div>
-            <el-button type="primary" @click="toExer">Start Practice</el-button>
         </div>
         <el-pagination 
             v-model:current-page="listpage.curPage"
@@ -79,9 +66,10 @@ const router = useRouter()
 const queryForm = reactive({// 查询表单
     name: '',
 })
+var structuredData = reactive([]);
 const listpage = reactive({// 分页列表
     curPage: 1,
-    pageSize: 6,
+    pageSize: 99999,
     total: 0,
     list: [] as any[],
 })
@@ -110,8 +98,39 @@ async function query() {
         return
     }
 
-    listpage.list = data.list
+    // listpage.list = data.list
+    listpage.list = data.list.sort((a, b) => {
+        const subjectA = Math.floor(a.id / 1000000); // Extract subject part
+        const yearA = Math.floor((a.id % 1000000) / 10000); // Extract year part
+        const chapterA = Math.floor((a.id % 10000) / 100); // Extract chapter part
+
+        const subjectB = Math.floor(b.id / 1000000); // Extract subject part
+        const yearB = Math.floor((b.id % 1000000) / 10000); // Extract year part
+        const chapterB = Math.floor((b.id % 10000) / 100); // Extract chapter part
+
+        // Sort by subject first
+        if (subjectA !== subjectB) {
+            return subjectA - subjectB; // Ascending order of subjects
+        }
+
+        // Then by year
+        if (yearA !== yearB) {
+            return yearA - yearB; // Ascending order of years
+        }
+
+        // Finally by chapter
+        if (chapterA !== chapterB) {
+            return chapterA - chapterB; // Ascending order of chapters
+        }
+
+        // If all are equal, sort by id as secondary criteria
+        return a.id - b.id; // Ascending order of id
+    });
     listpage.total = data.total
+
+    getStructuredData()
+    console.log(structuredData)
+
 }
 
 
@@ -140,6 +159,64 @@ async function toExer() {
     }
 
 }
+
+
+function getStructuredData() {
+    let subjects = {};
+
+    listpage.list.forEach(item => {
+        const idStr = item.id.toString();
+        const subjectId = idStr.slice(0, 1) + '000000';
+        const yearId = idStr.slice(0, 3) + '0000';
+        const chapterId = idStr.slice(3, 5);
+
+        //subject
+        if (idStr.endsWith('000000')) {
+            if (!subjects[subjectId]) {
+                subjects[subjectId] = { ...item, years: [] };
+            }
+        }
+        //year
+        else if (idStr.endsWith('0000')) {
+            if (!subjects[subjectId]) {
+                subjects[subjectId] = { years: [] }; // Create subject if not already initialized
+            }
+            const yearExists = subjects[subjectId].years.some(y => y.id === item.id);
+            if (!yearExists) {
+                subjects[subjectId].years.push({ ...item, chapters: [] });
+            }
+        }
+        //chapter
+        else {
+            const year = subjects[subjectId]?.years.find(y => y.id === parseInt(yearId));
+            if (year) {
+                item.chapterId = chapterId;
+                year.chapters.push(item);
+            }
+        }
+    });
+
+    // note: to do unsorted here lfdjds
+    Object.values(subjects).forEach(subject => {
+        subject.years.forEach(year => {
+            // year.totalQuestionNum = year.chapters.reduce((sum, chapter) => sum + chapter.questionNum, 0);
+            year.totalQuestionNum = year.chapters.reduce((sum, chapter) => sum + (parseInt(chapter.questionNum, 10) || 0), 0);
+            // if (year.totalQuestionNum > 0) {
+            //     year.chapters.push({
+            //         id: year.id,
+            //         name: 'Unsorted',
+            //         questionnum: year.totalQuestionNum
+            //     });
+            // }
+        });
+        // subject.totalQuestionNum = subject.years.reduce((sum, year) => sum + year.totalQuestionNum, 0);
+        subject.totalQuestionNum = subject.years.reduce((sum, year) => sum + (parseInt(year.totalQuestionNum, 10) || 0), 0);
+    });
+
+    return structuredData = Object.values(subjects);
+}
+
+
 
 // Function to handle dropdown button click
 function handleDropdownButtonClick(event) {
