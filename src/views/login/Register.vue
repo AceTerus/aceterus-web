@@ -92,7 +92,7 @@ const formRules = reactive<FormRules>({// 表单规则
     ],
     email: [
         { required: true, message: t('message.emailpls'), trigger: 'blur' },
-         {validator: validateEmail, trigger: 'blur' },
+        { validator: validateEmail, trigger: 'blur' },
     ],
     pwd: [
         { required: true, message: t('message.pwdpls'), trigger: 'blur' },
@@ -124,11 +124,14 @@ onUnmounted(() => {
 async function register() {
     // 校验数据有效性
     if (!formRef.value) return
-    await formRef.value.validate(async (valid) => {
-        if (!valid) {
-            return
-        }
-    })
+
+    const valid = await formRef.value.validate();
+    
+    if (!valid) {
+        console.log("failed")
+        return
+    }
+
     let { data: { code, data } } = await http.post("user/register", {
         loginName: form.value.username,
         email: form.value.email,
@@ -145,7 +148,7 @@ async function register() {
         return
     }
 
-    router.push("/verify-account")
+    router.push("/welcome")
 }
 
 </script>
