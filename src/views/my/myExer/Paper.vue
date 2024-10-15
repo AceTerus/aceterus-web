@@ -71,6 +71,9 @@
                 :errShow="!exer.answerShow && curQuestion.question.userScore != null"
                 >
             </QuestionVue>
+            <div v-if="curQuestion.question.userScore === 0">
+                <p style="font-family: Poppins; font-size: 14px; margin-right: 30px" align=right>Answer: {{ curQuestion.question.answers[0] }}</p>
+            </div>
             <!-- 评论 -->
             <div v-if="exer.rmkShow && exer.rmkState === 1" class="paper-right-my-rmk">
                 <el-input v-model="exerRmk.content" placeholder="我是这样解题的：" :autosize="{ minRows: 1 }" type="textarea" maxlength="100" show-word-limit resize="none"/>
@@ -329,7 +332,8 @@ function next(hasNext: boolean) {
                         curQuestion.question.userScore = curQuestion.question.scores[0]
                     }
 
-                    if (curQuestion.question.userScore < curQuestion.question.score) {// 如果答错，则停留当前题，不进入下一题
+                    if (curQuestion.question.userScore === 0) {// 如果答错，则停留当前题，不进入下一题
+                        curQuestion.question.correctAnswer = curQuestion.question.answers.join(', ')
                         return 
                     }
                 }
