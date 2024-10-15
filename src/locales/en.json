@@ -54,6 +54,8 @@
       "mistakes": "mistakes",
       "random": "Randomise Order",
       "practicecomplete": "Practice completed!",
-      "networkerror": "Network Error"
+      "networkerror": "Network Error",
+      "emailerr": "Email is invalid",
+      "pwdlength": "Password must be at least 6 characters long"
     }
 }

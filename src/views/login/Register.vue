@@ -57,29 +57,52 @@ function logData() {
   console.log(JSON.stringify(data));
 }
 
-const formRules = reactive<FormRules>({// 表单规则
-    username: [
-        { required: true, message: t('message.usernamepls'), trigger: 'blur' },
-    ],
-    email: [
-        { required: true, message: t('message.emailpls'), trigger: 'blur' },
-    ],
-    pwd: [
-        { required: true, message: t('message.pwdpls'), trigger: 'blur' },
-    ],
-    cpwd: [
-        { required: true, message: t('message.cpwdpls'), trigger: 'blur' },
-        { validator: validatePwd, trigger: 'blur' },
-    ],
-})
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateEmail(rule, value, callback) {
+    if (!emailRegex.test(value)) {
+        callback(new Error(t('message.emailerr')));
+    } else {
+        callback();
+    }
+}
 
 function validatePwd(rule, value, callback) {
+    const hasMinLength = value.length >= 6;
+    const hasNumber = /\d/.test(value);
+
+    if (!hasMinLength) {
+        callback(new Error(t('message.pwdlength')));
+    } else {
+        callback();
+    }
+}
+
+function validateCpwd(rule, value, callback) {
     if (value !== form.value.pwd) {
         callback(new Error(t('message.pwdmatch')));
     } else {
         callback();
     }
 }
+
+const formRules = reactive<FormRules>({// 表单规则
+    username: [
+        { required: true, message: t('message.usernamepls'), trigger: 'blur' },
+    ],
+    email: [
+        { required: true, message: t('message.emailpls'), trigger: 'blur' },
+         {validator: validateEmail, trigger: 'blur' },
+    ],
+    pwd: [
+        { required: true, message: t('message.pwdpls'), trigger: 'blur' },
+        { validator: validatePwd, trigger: 'blur' },
+    ],
+    cpwd: [
+        { required: true, message: t('message.cpwdpls'), trigger: 'blur' },
+        { validator: validateCpwd, trigger: 'blur' },
+    ],
+})
 
 const keyDown = (e:KeyboardEvent) => {
   if (e.keyCode == 13) {
@@ -101,7 +124,7 @@ onUnmounted(() => {
 async function register() {
     // 校验数据有效性
     if (!formRef.value) return
-    await formRef.value.validate(async (valid, fields) => {
+    await formRef.value.validate(async (valid) => {
         if (!valid) {
             return
         }
