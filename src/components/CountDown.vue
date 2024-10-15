@@ -1,5 +1,5 @@
 <template>
-    <span :style="`color: ${props.color};`">{{preTxt}} {{ d > 0 ? d + '天' : '' }}{{ h > 0 ? h : 0 }}小时{{ m > 0 ? m : 0 }}分{{ s > 0 ? s : 0}}秒</span>
+    <span :style="`color: ${props.color};`">{{preTxt}} {{ h }}:{{ m }}:{{ s }}</span>
 </template>
 
 <script lang="ts" setup>
@@ -30,9 +30,24 @@ watch(() => props.expireTime, () => {
 
 // 计算属性
 const d = computed(() => !expireTime.value ? '-' : Math.floor((expireTime.value.getTime() - curTime.value.getTime()) / 1000 / 60 / 60 / 24))
-const h = computed(() => !expireTime.value ? '-' : Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000 / 60 / 60) % 24))
-const m = computed(() => !expireTime.value ? '-' : Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000 / 60 ) % 60))
-const s = computed(() => !expireTime.value ? '-' : Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000 ) % 60))
+
+const h = computed(() => {
+  if (!expireTime.value) return '--';
+  const hours = Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000 / 60 / 60) % 24);
+  return hours < 10 ? '0' + hours : hours.toString();
+});
+
+const m = computed(() => {
+  if (!expireTime.value) return '--';
+  const minutes = Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000 / 60) % 60);
+  return minutes < 10 ? '0' + minutes : minutes.toString();
+});
+
+const s = computed(() => {
+  if (!expireTime.value) return '--';
+  const seconds = Math.floor(((expireTime.value.getTime() - curTime.value.getTime()) / 1000) % 60);
+  return seconds < 10 ? '0' + seconds : seconds.toString();
+});
 
 // 组件挂载完成后，执行如下方法
 onMounted(async () => {
