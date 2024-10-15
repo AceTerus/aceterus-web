@@ -1,5 +1,9 @@
 <template>
     <div class="header">
+        <div v-if="isMobile" class="mobile-notification" v-show="showNotification">
+            <span>Mobile version is coming soon! For now, please use a desktop for the best experience.</span>
+            <button @click="hideNotification" class="close-button">×</button>
+        </div>
         <div class="header-top">
             <img src="@/assets/images/Aceterus_logo.png" alt="logo" height="40" style="margin-left:30px">
             <span class="header-top-orgname"></span>
@@ -87,13 +91,25 @@ const formRules = reactive<FormRules>({// 密码修改表单校验规则
         }
     }],
 })
+const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+const showNotification = ref(true);
+
+// Check if the notification has been dismissed
+if (isMobile) {
+    const notificationDismissed = localStorage.getItem('notificationDismissed');
+    showNotification.value = !notificationDismissed; // Show if not dismissed
+}
+function hideNotification() {
+    showNotification.value = false;
+    localStorage.setItem('notificationDismissed', 'true'); // Set the flag in localStorage
+}
 
 // 组件挂载完成后，执行如下方法
 onMounted(async () => {
     // 更新页面标题
     // let { data: { data } } = await http.post('login/ent', {})
-    ent.name = data.name
-    document.title = data.name
+    ent.name = "Aceterus"
+    document.title = "Aceterus"
 
     // 更新页面logo
     let favicon = document.querySelector('link[rel="icon"]') as any;
@@ -109,6 +125,7 @@ async function dropdownCmd (command: string) {
 
     if (command === 'out') {
         await http.post('login/out', {})
+        sessionStorage.removeItem('user');
         router.push('/login')
         return
     }
@@ -219,5 +236,27 @@ async function pwdUpdate() {
         margin: 0;
     }
 
+}
+.mobile-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+
+    background-color: var(--el-color-primary);
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    z-index: 1000; // Ensure it stays on top
+
+    .close-button {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 18px;
+        cursor: pointer;
+        margin-left: 15px;
+    }
 }
 </style>
